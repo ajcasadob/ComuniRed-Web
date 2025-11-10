@@ -8,7 +8,7 @@ import { PanelControlAdminPage } from './pages/panel-control-admin.page/panel-co
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Menu,PanelControlAdminPage],
+  imports: [ RouterOutlet,Menu],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
