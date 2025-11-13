@@ -1,14 +1,15 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Menu } from "./menu/menu";
+
 import { PanelControlAdminPage } from './pages/panel-control-admin.page/panel-control-admin.page';
+import { MenuLayout } from './layouts/menu-layout/menu-layout';
 
 
 
 
 @Component({
   selector: 'app-root',
-  imports: [ RouterOutlet,Menu],
+  imports: [ RouterOutlet,MenuLayout],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

@@ -1,0 +1,58 @@
+<div class="container p-4">
+    <div class="card shadow">
+        <div class="card-body">
+            <h5 class="card-title fw-bold mb-1">Crear Nueva Reserva</h5>
+            <div class="text-muted mb-4" style="font-size: 0.96rem;">Selecciona la instalación, fecha y horario</div>
+            <form>
+                <div class="mb-3">
+                    <label for="instalacion" class="form-label">Instalación</label>
+                    <select id="instalacion" class="form-select">
+                        <option selected>Pista de Pádel 1</option>
+                        <!-- Puedes agregar más opciones aquí -->
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="fecha" class="form-label">Fecha</label>
+                    <input type="date" id="fecha" class="form-control" value="2025-11-13" min="2025-11-13">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Horario disponible</label>
+                    <div class="list-group">
+                        <label class="list-group-item">
+                            <input class="form-check-input me-2" type="radio" name="hora" value="09:00">
+                            09:00
+                        </label>
+                        <label class="list-group-item">
+                            <input class="form-check-input me-2" type="radio" name="hora" value="10:30">
+                            10:30
+                        </label>
+                        <label class="list-group-item">
+                            <input class="form-check-input me-2" type="radio" name="hora" value="12:00">
+                            12:00
+                        </label>
+                        <label class="list-group-item">
+                            <input class="form-check-input me-2" type="radio" name="hora" value="14:00">
+                            14:00
+                        </label>
+                        <label class="list-group-item">
+                            <input class="form-check-input me-2" type="radio" name="hora" value="16:00">
+                            16:00
+                        </label>
+                        <label class="list-group-item disabled text-muted">
+                            <input class="form-check-input me-2" type="radio" disabled>
+                            18:00 (Ocupado)
+                        </label>
+                        <label class="list-group-item">
+                            <input class="form-check-input me-2" type="radio" name="hora" value="20:00">
+                            20:00
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary mt-3 w-100">Reservar</button>
+            </form>
+        </div>
+    </div>
+</div>

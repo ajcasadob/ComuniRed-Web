@@ -9,12 +9,11 @@
                 </div>
             </div>
 
-            <!-- Botón que abre el modal -->
+            <!-- Botón de navegación -->
             <div class="mb-3">
-                <button type="button" class="btn btn-dark rounded-pill w-100" data-bs-toggle="modal"
-                    data-bs-target="#modalNuevaReserva">
+                <a routerLink="/formulario" class="btn btn-dark rounded-pill w-100">
                     Nueva Reserva
-                </button>
+                </a>
             </div>
 
             <div class="row g-3">
@@ -113,72 +112,4 @@
     </div>
 </div>
 
-<!-- Modal: Nueva Reserva -->
-<div class="modal fade" id="modalNuevaReserva" tabindex="-1" aria-labelledby="modalNuevaReservaLabel"
-    aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <!-- Header del Modal -->
-            <div class="modal-header border-0">
-                <h5 class="modal-title" id="modalNuevaReservaLabel">Crear Nueva Reserva</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
 
-            <!-- Body del Modal -->
-            <div class="modal-body">
-                <p class="text-muted mb-4">Selecciona la instalación, fecha y horario</p>
-
-                <form>
-                    <div class="row">
-                        <div class="col-12">
-                            <!-- Instalación -->
-                            <div class="mb-3">
-                                <label for="instalacion" class="form-label">Instalación</label>
-                                <select class="form-select" id="instalacion" name="instalacion">
-                                    <option selected>Pista de Pádel 1</option>
-                                    <option>Pista de Pádel 2</option>
-                                    <option>Mesa de Ping Pong</option>
-                                    <option>Sala Gourmet</option>
-                                    <option>Gimnasio</option>
-                                </select>
-                            </div>
-
-                            <!-- Fecha -->
-                            <div class="mb-3">
-                                <label for="fecha" class="form-label">Fecha</label>
-                                <input type="date" class="form-control" id="fecha" name="fecha">
-                            </div>
-
-                            <!-- Hora -->
-                            <div class="mb-3">
-                                <label for="hora" class="form-label">Hora de inicio</label>
-                                <select class="form-select" id="hora" name="hora">
-                                    <option value="">Selecciona una hora</option>
-                                    <option value="09:00">09:00</option>
-                                    <option value="10:30">10:30</option>
-                                    <option value="12:00">12:00</option>
-                                    <option value="14:00">14:00</option>
-                                    <option value="16:00">16:00</option>
-                                    <option value="18:00" disabled>18:00 (Ocupado)</option>
-                                    <option value="20:00">20:00</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Botones de Acción -->
-                    <div class="d-flex justify-content-end gap-2 mt-4">
-                        <button type="button" class="btn btn-outline-secondary rounded-pill px-4"
-                            data-bs-dismiss="modal">
-                            Cancelar
-                        </button>
-                        <button type="submit" class="btn btn-dark rounded-pill px-4">
-                            Crear Reserva
-                        </button>
-                    </div>
-                </form>
-
-            </div>
-        </div>
-    </div>
-</div>

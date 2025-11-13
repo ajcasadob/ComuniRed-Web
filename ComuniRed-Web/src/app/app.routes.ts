@@ -5,6 +5,7 @@ import { ReservasAdminPage } from './pages/reservas-admin.page/reservas-admin.pa
 import { PagosAdminPage } from './pages/pagos-admin.page/pagos-admin.page';
 import { IncidenciasAdminPage } from './pages/incidencias-admin.page/incidencias-admin.page';
 import { ComunicacionesAdminPage } from './pages/comunicaciones-admin.page/comunicaciones-admin.page';
+import { FormularioReservaPage } from './pages/formulario-reserva-page/formulario-reserva-page';
 
 export const routes: Routes = [ 
     {
@@ -32,5 +33,10 @@ export const routes: Routes = [
     {
         path:'comunicaciones',
         component:ComunicacionesAdminPage
+    }
+    ,
+    {
+        path:'formulario',
+        component: FormularioReservaPage
     }
 ];
