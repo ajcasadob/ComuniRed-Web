@@ -1,0 +1,167 @@
+<div class="container-fluid">
+    <div class="row g-0 min-vh-100">
+        <!-- Panel izquierdo (info) -->
+        <div
+            class="col-12 col-md-6 d-flex flex-column justify-content-center align-items-center text-center text-white p-5 bg-dark bg-gradient">
+            <div class="mb-4">
+                <div
+                    class="rounded-circle bg-white bg-opacity-25 text-white d-inline-flex align-items-center justify-content-center p-4 mb-3">
+                    <i class="bi bi-building-fill fs-2"></i>
+                </div>
+                <h2 class="fw-bold display-6 mb-2">Únete a ComuniRed</h2>
+                <p class="text-white-50 mb-4">Comienza a gestionar tu comunidad de forma eficiente</p>
+            </div>
+
+            <div class="w-100 px-2 px-md-5">
+                <div class="d-flex align-items-start mb-4">
+                    <div
+                        class="flex-shrink-0 rounded-circle bg-white bg-opacity-25 text-white d-flex align-items-center justify-content-center me-3 p-2">
+                        <i class="bi bi-shield-lock fs-5"></i>
+                    </div>
+                    <div class="text-start">
+                        <div class="fw-semibold">Seguro y Confiable</div>
+                        <div class="text-white-50 small">Tus datos están protegidos con los más altos estándares de
+                            seguridad</div>
+                    </div>
+                </div>
+
+                <div class="d-flex align-items-start mb-4">
+                    <div
+                        class="flex-shrink-0 rounded-circle bg-white bg-opacity-25 text-white d-flex align-items-center justify-content-center me-3 p-2">
+                        <i class="bi bi-speedometer2 fs-5"></i>
+                    </div>
+                    <div class="text-start">
+                        <div class="fw-semibold">Configuración Rápida</div>
+                        <div class="text-white-50 small">Empieza a usar todas las funciones en menos de 5 minutos
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex align-items-start">
+                    <div
+                        class="flex-shrink-0 rounded-circle bg-white bg-opacity-25 text-white d-flex align-items-center justify-content-center me-3 p-2">
+                        <i class="bi bi-people-fill fs-5"></i>
+                    </div>
+                    <div class="text-start">
+                        <div class="fw-semibold">Diseñado para Comunidades</div>
+                        <div class="text-white-50 small">Herramientas específicas para las necesidades de tu
+                            comunidad vecinal</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Panel derecho (formulario) -->
+        <div class="col-12 col-md-6 d-flex align-items-center justify-content-center bg-white p-5">
+            <div class="w-100" style="max-width:520px;">
+                <h2 class="text-center fw-bold mb-2">Crear Cuenta</h2>
+                <p class="text-center text-muted mb-4">Completa el formulario para registrarte en el sistema</p>
+
+                <form [formGroup]="registroForm" (ngSubmit)="crearUsuario()">
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label small fw-semibold">Nombre</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-white"><i class="bi bi-person"></i></span>
+                            <input id="nombre" type="text" class="form-control" formControlName="nombre" placeholder="Juan Pérez">
+                        </div>
+                        @if (registroForm.get('nombre')?.invalid && registroForm.get('nombre')?.touched) {
+                            <div class="text-danger small mt-1">El nombre es requerido</div>
+                        }
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label small fw-semibold">Correo Electrónico</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-white"><i class="bi bi-envelope"></i></span>
+                            <input id="email" type="email" class="form-control" formControlName="emailUsuario" placeholder="admin@comunidad.com">
+                        </div>
+                        @if (registroForm.get('emailUsuario')?.invalid && registroForm.get('emailUsuario')?.touched) {
+                            <div class="text-danger small mt-1">
+                                @if (registroForm.get('emailUsuario')?.errors?.['required']) {
+                                    El correo electrónico es requerido
+                                }
+                                @if (registroForm.get('emailUsuario')?.errors?.['pattern']) {
+                                    Ingresa un correo electrónico válido
+                                }
+                            </div>
+                        }
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label small fw-semibold">Contraseña</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-white"><i class="bi bi-lock"></i></span>
+                            <input id="password" type="password" class="form-control" formControlName="password" placeholder="••••••••">
+                        </div>
+                        @if (registroForm.get('password')?.invalid && registroForm.get('password')?.touched) {
+                            <div class="text-danger small mt-1">
+                                @if (registroForm.get('password')?.errors?.['required']) {
+                                    La contraseña es requerida
+                                }
+                                @if (registroForm.get('password')?.errors?.['minlength']) {
+                                    Mínimo 8 caracteres
+                                }
+                                @if (registroForm.get('password')?.errors?.['maxlength']) {
+                                    Máximo 20 caracteres
+                                }
+                            </div>
+                        }
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password2" class="form-label small fw-semibold">Confirmar Contraseña</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-white"><i class="bi bi-lock"></i></span>
+                            <input id="password2" type="password" class="form-control" formControlName="confirmarPassword" placeholder="••••••••">
+                        </div>
+                        @if (registroForm.get('confirmarPassword')?.invalid && registroForm.get('confirmarPassword')?.touched) {
+                            <div class="text-danger small mt-1">
+                                @if (registroForm.get('confirmarPassword')?.errors?.['required']) {
+                                    Debes confirmar la contraseña
+                                }
+                                @if (registroForm.get('confirmarPassword')?.errors?.['minlength']) {
+                                    Mínimo 8 caracteres
+                                }
+                                @if (registroForm.get('confirmarPassword')?.errors?.['maxlength']) {
+                                    Máximo 20 caracteres
+                                }
+                            </div>
+                        }
+                        @if (registroForm.get('confirmarPassword')?.valid && registroForm.get('password')?.value !== registroForm.get('confirmarPassword')?.value && registroForm.get('confirmarPassword')?.touched) {
+                            <div class="text-danger small mt-1">Las contraseñas no coinciden</div>
+                        }
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="form-check p-3 border rounded-2">
+                            <input class="form-check-input me-2" type="checkbox" id="terms">
+                            <label class="form-check-label small text-muted" for="terms">
+                                Acepto los
+                                <a href="#" class="text-decoration-none">términos y condiciones</a>
+                                y la
+                                <a href="#" class="text-decoration-none">política de privacidad</a>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="d-grid mb-3">
+                        <button type="submit" class="btn btn-dark btn-lg rounded-pill" [disabled]="registroForm.invalid || registroForm.get('password')?.value !== registroForm.get('confirmarPassword')?.value">Crear Cuenta</button>
+                    </div>
+
+                    <div class="d-flex align-items-center mb-3">
+                        <hr class="flex-grow-1">
+                        <div class="px-3 text-muted small">¿Ya tienes cuenta?</div>
+                        <hr class="flex-grow-1">
+                    </div>
+
+                    <div class="d-grid mb-4">
+                        <a routerLink="/login" class="btn btn-outline-secondary rounded-pill">Iniciar Sesión</a>
+                    </div>
+
+                    <p class="text-center text-muted small mb-0">© 2024 ComuniRed. Todos los derechos reservados.
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

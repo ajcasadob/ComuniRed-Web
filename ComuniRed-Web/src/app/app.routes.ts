@@ -6,11 +6,12 @@ import { PagosAdminPage } from './pages/pagos-admin.page/pagos-admin.page';
 import { IncidenciasAdminPage } from './pages/incidencias-admin.page/incidencias-admin.page';
 import { ComunicacionesAdminPage } from './pages/comunicaciones-admin.page/comunicaciones-admin.page';
 import { FormularioReservaPage } from './pages/formulario-reserva-page/formulario-reserva-page';
+import { RegistroPage } from './pages/registro-page/registro-page';
 
 export const routes: Routes = [ 
     {
         path: '',
-        redirectTo: 'panel de control',
+        redirectTo: '/login',
         pathMatch: 'full'
     },
     {
@@ -38,5 +39,14 @@ export const routes: Routes = [
     {
         path:'formulario',
         component: FormularioReservaPage
+    }
+    ,
+    {
+        path:'login',
+        component:LoginAdminPage
+    },
+    {
+        path:'registro',
+        component:RegistroPage
     }
 ];
