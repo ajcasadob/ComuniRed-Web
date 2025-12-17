@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 
 import { PanelControlAdminPage } from './pages/panel-control-admin.page/panel-control-admin.page';
 import { MenuLayout } from './layouts/menu-layout/menu-layout';
@@ -15,4 +15,11 @@ import { MenuLayout } from './layouts/menu-layout/menu-layout';
 })
 export class App {
   protected readonly title = signal('ComuniRed-Web');
+
+  constructor(private router: Router){}
+
+  isAuthRoute():boolean {
+    const authRoutes = ['/login','/regitro'];
+    return authRoutes.includes(this.router.url);
+  }
 }

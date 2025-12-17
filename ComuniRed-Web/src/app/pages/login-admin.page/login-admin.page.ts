@@ -31,7 +31,7 @@ export class LoginAdminPage {
       if(resp.user.role != 'admin'){
         alert('No eres admnistrador')
       }else{
-        this.route.navigate(['citas'])
+        this.route.navigate(['panel de control'])
       }
     }, error=>{
       alert('El correo no esta registrado')

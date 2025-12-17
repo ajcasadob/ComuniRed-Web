@@ -1,11 +1,12 @@
 <div class="d-flex">
     <!-- Menú lateral -->
+    @if (!isAuthRoute) {
     <div class="bg-dark text-light" style="width: 250px; min-height: 100vh;">
         <app-menu-layout></app-menu-layout>
     </div>
-
+    }
     <!-- Contenido principal -->
-    <div class="flex-grow-1 p-4 bg-light" style="min-height: 100vh;">
+    <div class="flex-grow-1 p-4 bg-light" style="min-height: 100vh;" [class.w-100]="isAuthRoute()">
         <router-outlet></router-outlet>
     </div>
 </div>
