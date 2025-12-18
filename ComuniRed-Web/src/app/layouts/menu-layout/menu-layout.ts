@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-menu-layout',
@@ -8,5 +8,12 @@ import { RouterLink, RouterOutlet } from '@angular/router';
   styleUrl: './menu-layout.css',
 })
 export class MenuLayout {
+
+  constructor(private router: Router) {}
+
+  cerrarSesion() {
+    localStorage.removeItem('token');
+    this.router.navigate(['/login']);
+  }
 
 }

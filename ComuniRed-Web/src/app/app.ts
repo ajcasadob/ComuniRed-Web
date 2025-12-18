@@ -19,7 +19,7 @@ export class App {
   constructor(private router: Router){}
 
   isAuthRoute():boolean {
-    const authRoutes = ['/login','/regitro'];
+    const authRoutes = ['/login','/registro'];
     return authRoutes.includes(this.router.url);
   }
 }
