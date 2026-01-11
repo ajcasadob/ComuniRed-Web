@@ -7,8 +7,12 @@ import { IncidenciasAdminPage } from './pages/incidencias-admin.page/incidencias
 import { ComunicacionesAdminPage } from './pages/comunicaciones-admin.page/comunicaciones-admin.page';
 import { FormularioReservaPage } from './pages/formulario-reserva-page/formulario-reserva-page';
 import { RegistroPage } from './pages/registro-page/registro-page';
+import { IncidenciaAdminFormPage } from './pages/incidencia-admin-form.page/incidencia-admin-form.page';
+import { ComunicacionForm } from './pages/comunicacion-form/comunicacion-form';
+import { ReservaForm } from './pages/reserva-form/reserva-form';
+import { PagoForm } from './pages/pago-form/pago-form';
 
-export const routes: Routes = [ 
+export const routes: Routes = [
     {
         path: '',
         redirectTo: '/login',
@@ -18,35 +22,73 @@ export const routes: Routes = [
         path: 'panel de control',
         component: PanelControlAdminPage
     },
+
     {
-        path:'reservas',
-        component: ReservasAdminPage
-    
+        path: 'incidencias',
+        component: IncidenciasAdminPage
     },
     {
-        path:'pagos',
-        component:PagosAdminPage
+        path: 'incidencia-form',
+        component: IncidenciaAdminFormPage
+
     },
     {
-        path:'incidencias',
-        component:IncidenciasAdminPage
+        path: 'incidencia-form/:id',
+        component: IncidenciaAdminFormPage
+
     },
     {
-        path:'comunicaciones',
-        component:ComunicacionesAdminPage
+        path: 'comunicaciones',
+        component: ComunicacionesAdminPage
     }
     ,
     {
-        path:'formulario',
+        path: 'formulario',
         component: FormularioReservaPage
     }
     ,
     {
-        path:'login',
-        component:LoginAdminPage
+        path: 'login',
+        component: LoginAdminPage
     },
     {
-        path:'registro',
-        component:RegistroPage
+        path: 'registro',
+        component: RegistroPage
+    },
+
+    {
+        path: 'comunicacion-form',
+        component: ComunicacionForm
+    },
+    {
+        path: 'comunicacion-form/:id',
+        component: ComunicacionForm
     }
+    ,
+    {
+        path: 'reservas-admin',
+        component: ReservasAdminPage
+    },
+    {
+        path: 'reserva-form',
+        component: ReservaForm
+    },
+    {
+        path: 'reserva-form/:id',
+        component: ReservaForm
+    },
+    {
+        path: 'pagos-admin',
+        component: PagosAdminPage
+    },
+    {
+        path: 'pago-form',
+        component: PagoForm
+    },
+    {
+        path: 'pago-form/:id',
+        component: PagoForm
+    }
+
+
 ];

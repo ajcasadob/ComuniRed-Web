@@ -20,23 +20,28 @@ export class LoginAdminPage {
   })
 
   loginUsuario(){
-    const loginUsuario = new Usuario(
-      this.logiForm.get('email')?.value!,
-      this.logiForm.get('password')?.value!
-    )
-
-    this.servicioLogin.loginUsuario(loginUsuario).subscribe(resp =>{
-      const token = resp.token;
-      localStorage.setItem('token',token);
-      if(resp.user.role != 'admin'){
-        alert('No eres admnistrador')
-      }else{
-        this.route.navigate(['panel de control'])
-      }
-    }, error=>{
-      alert('El correo no esta registrado')
-    }
+  const loginUsuario = new Usuario(
+    this.logiForm.get('email')?.value!,
+    this.logiForm.get('password')?.value!
   )
+
+  this.servicioLogin.loginUsuario(loginUsuario).subscribe(resp =>{
+    const token = resp.token;
+    localStorage.setItem('token', token);
     
-  }
+    
+    localStorage.setItem('user_id', resp.user.id.toString());
+    localStorage.setItem('user_name', resp.user.name);
+    localStorage.setItem('user_email', resp.user.email);
+    localStorage.setItem('user_role', resp.user.role);
+    
+    if(resp.user.role != 'admin'){
+      alert('No eres administrador')
+    } else {
+      this.route.navigate(['panel de control'])
+    }
+  }, error=>{
+    alert('El correo no esta registrado')
+  })
+}
 }

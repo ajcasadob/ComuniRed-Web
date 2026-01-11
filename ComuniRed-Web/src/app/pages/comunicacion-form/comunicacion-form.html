@@ -1,0 +1,133 @@
+<div class="container-fluid">
+    <div class="row g-0 min-vh-100">
+        <!-- Panel izquierdo (info) -->
+        <div class="col-12 col-md-6 d-flex flex-column justify-content-center align-items-center text-center text-white p-5 bg-dark bg-gradient">
+            <div class="mb-4">
+                <div class="rounded-circle bg-white bg-opacity-25 text-white d-inline-flex align-items-center justify-content-center p-4 mb-3">
+                    <i class="bi bi-megaphone-fill fs-2"></i>
+                </div>
+                <h2 class="fw-bold display-6 mb-2">{{ isEditMode ? 'Editar Comunicación' : 'Nueva Comunicación' }}</h2>
+                <p class="text-white-50 mb-4">{{ isEditMode ? 'Actualiza el anuncio para la comunidad' : 'Mantén informada a toda la comunidad' }}</p>
+            </div>
+
+            <div class="w-100 px-2 px-md-5">
+                <div class="d-flex align-items-start mb-4">
+                    <div class="flex-shrink-0 rounded-circle bg-white bg-opacity-25 text-white d-flex align-items-center justify-content-center me-3 p-2">
+                        <i class="bi bi-broadcast fs-5"></i>
+                    </div>
+                    <div class="text-start">
+                        <div class="fw-semibold">Comunicación Instantánea</div>
+                        <div class="text-white-50 small">Todos los vecinos recibirán tu anuncio al momento</div>
+                    </div>
+                </div>
+
+                <div class="d-flex align-items-start mb-4">
+                    <div class="flex-shrink-0 rounded-circle bg-white bg-opacity-25 text-white d-flex align-items-center justify-content-center me-3 p-2">
+                        <i class="bi bi-calendar-event fs-5"></i>
+                    </div>
+                    <div class="text-start">
+                        <div class="fw-semibold">Organización Efectiva</div>
+                        <div class="text-white-50 small">Categoriza y programa tus comunicaciones</div>
+                    </div>
+                </div>
+
+                <div class="d-flex align-items-start">
+                    <div class="flex-shrink-0 rounded-circle bg-white bg-opacity-25 text-white d-flex align-items-center justify-content-center me-3 p-2">
+                        <i class="bi bi-eye fs-5"></i>
+                    </div>
+                    <div class="text-start">
+                        <div class="fw-semibold">Seguimiento de Lectura</div>
+                        <div class="text-white-50 small">Conoce quién ha visto cada comunicación</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Panel derecho (formulario) -->
+        <div class="col-12 col-md-6 d-flex align-items-center justify-content-center bg-white p-5">
+            <div class="w-100" style="max-width:520px;">
+                <h2 class="text-center fw-bold mb-2">{{ isEditMode ? 'Editar Comunicación' : 'Nueva Comunicación' }}</h2>
+                <p class="text-center text-muted mb-4">{{ isEditMode ? 'Modifica los datos del anuncio' : 'Completa el formulario para crear un nuevo anuncio' }}</p>
+
+                <form [formGroup]="comunicacionForm" (ngSubmit)="guardarComunicacion()">
+                    <div class="mb-3">
+                        <label for="titulo" class="form-label small fw-semibold">Título</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-white"><i class="bi bi-chat-left-text"></i></span>
+                            <input id="titulo" type="text" class="form-control" formControlName="titulo" placeholder="Ej: Reunión de vecinos">
+                        </div>
+                        @if (comunicacionForm.get('titulo')?.invalid && comunicacionForm.get('titulo')?.touched) {
+                            <div class="text-danger small mt-1">
+                                @if (comunicacionForm.get('titulo')?.errors?.['required']) {
+                                    El título es requerido
+                                }
+                                @if (comunicacionForm.get('titulo')?.errors?.['maxlength']) {
+                                    Máximo 200 caracteres
+                                }
+                            </div>
+                        }
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="contenido" class="form-label small fw-semibold">Contenido</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-white"><i class="bi bi-file-text"></i></span>
+                            <textarea id="contenido" class="form-control" formControlName="contenido" rows="5" placeholder="Escribe aquí el contenido de la comunicación..."></textarea>
+                        </div>
+                        @if (comunicacionForm.get('contenido')?.invalid && comunicacionForm.get('contenido')?.touched) {
+                            <div class="text-danger small mt-1">El contenido es requerido</div>
+                        }
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="tipo" class="form-label small fw-semibold">Tipo</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-white"><i class="bi bi-tag"></i></span>
+                            <select id="tipo" class="form-select" formControlName="tipo">
+                                <option value="">Selecciona un tipo</option>
+                                @for (tipo of tipos; track tipo) {
+                                    <option [value]="tipo">{{ tipo }}</option>
+                                }
+                            </select>
+                        </div>
+                        @if (comunicacionForm.get('tipo')?.invalid && comunicacionForm.get('tipo')?.touched) {
+                            <div class="text-danger small mt-1">El tipo es requerido</div>
+                        }
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="fecha_publicacion" class="form-label small fw-semibold">Fecha de Publicación</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-white"><i class="bi bi-calendar3"></i></span>
+                            <input id="fecha_publicacion" type="date" class="form-control" formControlName="fecha_publicacion">
+                        </div>
+                        @if (comunicacionForm.get('fecha_publicacion')?.invalid && comunicacionForm.get('fecha_publicacion')?.touched) {
+                            <div class="text-danger small mt-1">La fecha de publicación es requerida</div>
+                        }
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="form-check p-3 border rounded-2">
+                            <input class="form-check-input me-2" type="checkbox" id="activa" formControlName="activa">
+                            <label class="form-check-label small" for="activa">
+                                <strong>Comunicación activa</strong>
+                                <div class="text-muted small">Si está activa, se mostrará destacada en el listado</div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2 mb-3">
+                        <button type="submit" class="btn btn-dark btn-lg rounded-pill" [disabled]="comunicacionForm.invalid">
+                            {{ isEditMode ? 'Actualizar Comunicación' : 'Crear Comunicación' }}
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary rounded-pill" (click)="cancelar()">
+                            Cancelar
+                        </button>
+                    </div>
+
+                    <p class="text-center text-muted small mb-0">© 2024 ComuniRed. Todos los derechos reservados.</p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

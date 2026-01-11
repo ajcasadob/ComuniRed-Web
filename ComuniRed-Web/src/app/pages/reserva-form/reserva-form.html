@@ -1,0 +1,113 @@
+<div class="container py-4">
+  <div class="card">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">{{ isEditMode ? 'Editar' : 'Nueva' }} Reserva</h2>
+        <a routerLink="/reservas-admin" class="btn btn-outline-secondary rounded-pill">
+          <i class="bi bi-arrow-left me-2"></i>Volver
+        </a>
+      </div>
+
+      <form [formGroup]="reservaForm" (ngSubmit)="onSubmit()">
+        <!-- Espacio a reservar -->
+        <div class="mb-3">
+          <label for="nombre_espacio" class="form-label">Espacio a reservar *</label>
+          <select
+            id="nombre_espacio"
+            class="form-select"
+            formControlName="nombre_espacio"
+          >
+            <option value="">Selecciona un espacio</option>
+            <option value="Pista de Pádel 1">Pista de Pádel 1</option>
+            <option value="Pista de Pádel 2">Pista de Pádel 2</option>
+            <option value="Mesa de Ping Pong">Mesa de Ping Pong</option>
+            <option value="Sala Gourmet">Sala Gourmet</option>
+            <option value="Gimnasio">Gimnasio</option>
+            <option value="Salón de Eventos">Salón de Eventos</option>
+            <option value="Zona BBQ">Zona BBQ</option>
+          </select>
+          @if (reservaForm.get('nombre_espacio')?.invalid && reservaForm.get('nombre_espacio')?.touched) {
+            <div class="text-danger small mt-1">
+              El espacio es obligatorio
+            </div>
+          }
+        </div>
+
+        <!-- Fecha de reserva -->
+        <div class="mb-3">
+          <label for="fecha_reserva" class="form-label">Fecha de reserva *</label>
+          <input
+            type="date"
+            id="fecha_reserva"
+            class="form-control"
+            formControlName="fecha_reserva"
+          />
+          @if (reservaForm.get('fecha_reserva')?.invalid && reservaForm.get('fecha_reserva')?.touched) {
+            <div class="text-danger small mt-1">
+              La fecha es obligatoria
+            </div>
+          }
+        </div>
+
+        <!-- Horas -->
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="hora_inicio" class="form-label">Hora inicio *</label>
+            <input
+              type="time"
+              id="hora_inicio"
+              class="form-control"
+              formControlName="hora_inicio"
+            />
+            @if (reservaForm.get('hora_inicio')?.invalid && reservaForm.get('hora_inicio')?.touched) {
+              <div class="text-danger small mt-1">
+                La hora de inicio es obligatoria
+              </div>
+            }
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label for="hora_fin" class="form-label">Hora fin *</label>
+            <input
+              type="time"
+              id="hora_fin"
+              class="form-control"
+              formControlName="hora_fin"
+            />
+            @if (reservaForm.get('hora_fin')?.invalid && reservaForm.get('hora_fin')?.touched) {
+              <div class="text-danger small mt-1">
+                La hora de fin es obligatoria
+              </div>
+            }
+          </div>
+        </div>
+
+        <!-- Estado -->
+        <div class="mb-3">
+          <label for="estado" class="form-label">Estado *</label>
+          <select id="estado" class="form-select" formControlName="estado">
+            <option value="pendiente">Pendiente</option>
+            <option value="confirmada">Confirmada</option>
+            <option value="cancelada">Cancelada</option>
+            <option value="completada">Completada</option>
+          </select>
+        </div>
+
+        <!-- Botones -->
+        <div class="d-flex gap-2">
+          <button
+            type="submit"
+            class="btn btn-primary rounded-pill"
+            [disabled]="!reservaForm.valid"
+          >
+            <i class="bi bi-check-circle me-2"></i>
+            {{ isEditMode ? 'Actualizar' : 'Crear' }} Reserva
+          </button>
+          <a routerLink="/reservas-admin" class="btn btn-outline-secondary rounded-pill">
+            Cancelar
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
