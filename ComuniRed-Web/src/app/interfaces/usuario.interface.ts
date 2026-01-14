@@ -5,8 +5,8 @@ export interface Usuario {
     name: string;
     email: string;
     role: string;
-    vivienda_id?: number | null; // AGREGAR
-    vivienda?: Vivienda; // AGREGAR (importar de vivienda.interface.ts)
+    vivienda_id?: number | null; 
+    vivienda?: Vivienda;
     email_verified_at: null | string;
     created_at: string;
     updated_at: string;
