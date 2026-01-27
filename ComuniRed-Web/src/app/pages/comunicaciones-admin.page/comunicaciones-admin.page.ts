@@ -67,9 +67,6 @@ export class ComunicacionesAdminPage implements OnInit{
     }
   }
 
-  togglePin(id: number): void {
-    // Implementar lógica de pin si lo necesitas
-    console.log('Pin toggled for:', id);
-  }
+ 
 
 }
