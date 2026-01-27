@@ -5,12 +5,13 @@ import { ReservasAdminPage } from './pages/reservas-admin.page/reservas-admin.pa
 import { PagosAdminPage } from './pages/pagos-admin.page/pagos-admin.page';
 import { IncidenciasAdminPage } from './pages/incidencias-admin.page/incidencias-admin.page';
 import { ComunicacionesAdminPage } from './pages/comunicaciones-admin.page/comunicaciones-admin.page';
-import { FormularioReservaPage } from './pages/formulario-reserva-page/formulario-reserva-page';
+
 import { RegistroPage } from './pages/registro-page/registro-page';
 import { IncidenciaAdminFormPage } from './pages/incidencia-admin-form.page/incidencia-admin-form.page';
 import { ComunicacionForm } from './pages/comunicacion-form/comunicacion-form';
 import { ReservaForm } from './pages/reserva-form/reserva-form';
 import { PagoForm } from './pages/pago-form/pago-form';
+import { FormularioReservaPage } from './pages/formulario-reserva-page/formulario-reserva-page';
 
 export const routes: Routes = [
     {

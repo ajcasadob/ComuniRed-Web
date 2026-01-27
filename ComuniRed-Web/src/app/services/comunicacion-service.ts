@@ -31,5 +31,7 @@ export class ComunicacionService {
   deleteComunicacion(id: number): Observable<any> {
     return this.http.delete(`${this.URL_BASE}/comunicaciones/${id}`);
   }
+
+  
   
 }

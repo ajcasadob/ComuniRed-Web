@@ -4,115 +4,96 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Vivienda } from '../../interfaces/vivienda.interface';
 import { PagoService } from '../../services/pago-service';
-import { HttpClient } from '@angular/common/http';
+
 import { PagoDTO } from '../../dto/pago.dto';
+import { ViviendaService } from '../../services/vivienda-service';
 
 @Component({
   selector: 'app-pago-form',
-  imports: [CommonModule,ReactiveFormsModule,RouterModule],
-  standalone:true,
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  standalone: true,
   templateUrl: './pago-form.html',
   styleUrl: './pago-form.css',
 })
 export class PagoForm implements OnInit {
 
-  pagoForm: FormGroup;
-  isEditMode = false;
-  pagoId?: number;
+  pagoForm = new FormGroup({
+    vivienda_id: new FormControl<number | null>(null, [Validators.required]),
+    concepto: new FormControl('', [Validators.required, Validators.maxLength(200)]),
+    periodo: new FormControl('', [Validators.required, Validators.maxLength(50)]),
+    importe: new FormControl<number | null>(null, [Validators.required, Validators.min(0)]),
+    estado: new FormControl('pendiente', [Validators.required]),
+    fecha_vencimiento: new FormControl('', [Validators.required]),
+    fecha_pago: new FormControl(''),
+  });
+
+  pagoId: number | null = null;
   viviendas: Vivienda[] = [];
+
+  get isEditMode(): boolean {
+    return this.pagoId !== null;
+  }
 
   constructor(
     private pagoService: PagoService,
+    private viviendaService: ViviendaService,
     private router: Router,
-    private route: ActivatedRoute,
-    private http: HttpClient
-  ) {
-    this.pagoForm = new FormGroup({
-      vivienda_id: new FormControl('', [Validators.required]),
-      concepto: new FormControl('', [Validators.required, Validators.maxLength(200)]),
-      periodo: new FormControl('', [Validators.required, Validators.maxLength(50)]),
-      importe: new FormControl('', [Validators.required, Validators.min(0)]),
-      estado: new FormControl('pendiente', [Validators.required]),
-      fecha_vencimiento: new FormControl('', [Validators.required]),
-      fecha_pago: new FormControl(''),
-    });
-  }
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.cargarViviendas();
     
-    this.route.params.subscribe((params) => {
-      if (params['id']) {
-        this.isEditMode = true;
-        this.pagoId = +params['id'];
-        this.cargarPago();
-      }
-    });
+    const id = this.route.snapshot.params['id'];
+    if (id) {
+      this.pagoId = +id;
+      this.cargarPago();
+    }
   }
 
   cargarViviendas(): void {
-    this.http.get<Vivienda[]>('http://127.0.0.1:8000/api/viviendas').subscribe({
-      next: (data) => {
-        this.viviendas = data;
-      },
-      error: (error) => {
-        console.error('Error al cargar viviendas:', error);
-      },
+    this.viviendaService.getAllViviendas().subscribe({
+      next: (data) => this.viviendas = data,
+      error: () => console.error('Error al cargar viviendas')
     });
   }
 
   cargarPago(): void {
     if (this.pagoId) {
       this.pagoService.getPagoById(this.pagoId).subscribe({
-        next: (pago) => {
-          this.pagoForm.patchValue(pago);
-        },
-        error: (error) => {
-          console.error('Error al cargar pago:', error);
+        next: (pago) => this.pagoForm.patchValue(pago),
+        error: () => {
           alert('Error al cargar el pago');
-        },
+          this.router.navigate(['/pagos-admin']);
+        }
       });
     }
   }
 
   onSubmit(): void {
-    if (this.pagoForm.valid) {
-      const pagoDTO = new PagoDTO(
-        this.pagoForm.value.vivienda_id,
-        this.pagoForm.value.concepto,
-        this.pagoForm.value.periodo,
-        this.pagoForm.value.importe,
-        this.pagoForm.value.estado,
-        this.pagoForm.value.fecha_vencimiento,
-        this.pagoForm.value.fecha_pago || null
-      );
-
-      if (this.isEditMode && this.pagoId) {
-        this.pagoService.updatePago(this.pagoId, pagoDTO).subscribe({
-          next: () => {
-            alert('Pago actualizado correctamente');
-            this.router.navigate(['/pagos-admin']);
-          },
-          error: (error) => {
-            console.error('Error al actualizar pago:', error);
-            alert('Error al actualizar el pago');
-          },
-        });
-      } else {
-        this.pagoService.createPago(pagoDTO).subscribe({
-          next: () => {
-            alert('Pago creado correctamente');
-            this.router.navigate(['/pagos-admin']);
-          },
-          error: (error) => {
-            console.error('Error al crear pago:', error);
-            alert('Error al crear el pago');
-          },
-        });
-      }
-    } else {
+    if (this.pagoForm.invalid) {
       alert('Por favor completa todos los campos requeridos');
+      return;
     }
-  }
 
+    const { vivienda_id, concepto, periodo, importe, estado, fecha_vencimiento, fecha_pago } = this.pagoForm.value;
+    const pagoDTO = new PagoDTO(
+      vivienda_id!,
+      concepto!,
+      periodo!,
+      importe!,
+      estado!,
+      fecha_vencimiento!,
+      fecha_pago || null
+    );
+
+    const operacion = this.pagoId
+      ? this.pagoService.updatePago(this.pagoId, pagoDTO)
+      : this.pagoService.createPago(pagoDTO);
+
+    operacion.subscribe({
+      next: () => this.router.navigate(['/pagos-admin']),
+      error: () => alert('Error al guardar el pago')
+    });
+  }
 }

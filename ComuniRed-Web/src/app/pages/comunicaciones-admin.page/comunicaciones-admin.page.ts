@@ -10,8 +10,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './comunicaciones-admin.page.html',
   styleUrl: './comunicaciones-admin.page.css',
 })
-export class ComunicacionesAdminPage implements OnInit{
-
+export class ComunicacionesAdminPage implements OnInit {
 
   comunicaciones: Comunicacion[] = [];
 
@@ -25,15 +24,10 @@ export class ComunicacionesAdminPage implements OnInit{
   }
 
   cargarComunicaciones(): void {
-    this.comunicacionService.getAllComunicaciones().subscribe(
-      (data) => {
-        this.comunicaciones = data;
-      },
-      (error) => {
-        console.error('Error al cargar comunicaciones:', error);
-        alert('Error al cargar las comunicaciones');
-      }
-    );
+    this.comunicacionService.getAllComunicaciones().subscribe({
+      next: (data) => this.comunicaciones = data,
+      error: () => alert('Error al cargar las comunicaciones')
+    });
   }
 
   getBadgeClass(tipo: string): string {
@@ -54,19 +48,15 @@ export class ComunicacionesAdminPage implements OnInit{
 
   eliminarComunicacion(id: number): void {
     if (confirm('¿Estás seguro de eliminar esta comunicación?')) {
-      this.comunicacionService.deleteComunicacion(id).subscribe(
-        () => {
+      this.comunicacionService.deleteComunicacion(id).subscribe({
+        next: () => {
           alert('Comunicación eliminada correctamente');
           this.cargarComunicaciones();
         },
-        (error) => {
-          console.error('Error al eliminar comunicación:', error);
-          alert('Error al eliminar la comunicación');
-        }
-      );
+        error: () => alert('Error al eliminar la comunicación')
+      });
     }
   }
 
  
-
 }

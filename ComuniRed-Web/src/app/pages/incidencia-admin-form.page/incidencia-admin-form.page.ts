@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-incidencia-admin-form.page',
-  imports: [RouterLink, ReactiveFormsModule, CommonModule],
+  imports: [ ReactiveFormsModule, CommonModule],
   standalone:true,
   templateUrl: './incidencia-admin-form.page.html',
   styleUrl: './incidencia-admin-form.page.css',
