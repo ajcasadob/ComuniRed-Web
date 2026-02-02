@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterLink, RouterModule } from "@angular/router";
+import { RouterModule } from "@angular/router";
 import { ReservaService } from '../../services/reserva-service';
 import { Reserva } from '../../interfaces/reserva.interface';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-reservas-admin.page',
-  imports: [CommonModule,RouterModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './reservas-admin.page.html',
   styleUrl: './reservas-admin.page.css',
 })
 export class ReservasAdminPage implements OnInit {
 
-   reservas: Reserva[] = [];
+  reservas: Reserva[] = [];
 
   instalaciones = [
     { nombre: 'Pista de Pádel 1', icono: 'bi-trophy' },
@@ -63,9 +63,4 @@ export class ReservasAdminPage implements OnInit {
   getNombreUsuario(reserva: Reserva): string {
     return reserva.usuario?.name || 'Usuario desconocido';
   }
-
-  getViviendaUsuario(reserva: Reserva): string {
-    return reserva.usuario?.vivienda?.numero_vivienda || '-';
-  }
-
 }

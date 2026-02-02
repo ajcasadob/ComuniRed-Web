@@ -1,162 +1,144 @@
-<div class="container-fluid">
-    <div class="row g-0 min-vh-100">
-        <!-- Panel izquierdo (info) -->
-        <div class="col-12 col-md-6 d-flex flex-column justify-content-center align-items-center text-center text-white p-5 bg-dark bg-gradient">
-            <div class="mb-4">
-                <div class="rounded-circle bg-white bg-opacity-25 text-white d-inline-flex align-items-center justify-content-center p-4 mb-3">
-                    <i class="bi bi-exclamation-triangle-fill fs-2"></i>
-                </div>
-                <h2 class="fw-bold display-6 mb-2">{{ isEditMode ? 'Editar Incidencia' : 'Reportar Incidencia' }}</h2>
-                <p class="text-white-50 mb-4">{{ isEditMode ? 'Actualiza los datos de la incidencia' : 'Ayúdanos a mantener la comunidad en perfecto estado' }}</p>
+<div class="container py-4">
+  <div class="card">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">{{ isEditMode ? 'Editar' : 'Nueva' }} Incidencia</h2>
+        <button type="button" class="btn btn-outline-secondary rounded-pill" (click)="cancelar()">
+          <i class="bi bi-arrow-left me-2"></i>Volver
+        </button>
+      </div>
+
+      <form [formGroup]="incidenciaForm" (ngSubmit)="guardarIncidencia()">
+        <!-- Título -->
+        <div class="mb-3">
+          <label for="titulo" class="form-label">Título *</label>
+          <input
+            type="text"
+            id="titulo"
+            class="form-control"
+            formControlName="titulo"
+            placeholder="Ej: Luz fundida en pasillo 3"
+          />
+          @if (incidenciaForm.get('titulo')?.invalid && incidenciaForm.get('titulo')?.touched) {
+            <div class="text-danger small mt-1">
+              @if (incidenciaForm.get('titulo')?.errors?.['required']) {
+                El título es obligatorio
+              }
+              @if (incidenciaForm.get('titulo')?.errors?.['maxlength']) {
+                Máximo 200 caracteres
+              }
             </div>
-
-            <div class="w-100 px-2 px-md-5">
-                <div class="d-flex align-items-start mb-4">
-                    <div class="flex-shrink-0 rounded-circle bg-white bg-opacity-25 text-white d-flex align-items-center justify-content-center me-3 p-2">
-                        <i class="bi bi-clock-history fs-5"></i>
-                    </div>
-                    <div class="text-start">
-                        <div class="fw-semibold">Respuesta Rápida</div>
-                        <div class="text-white-50 small">Tu reporte será atendido a la brevedad posible</div>
-                    </div>
-                </div>
-
-                <div class="d-flex align-items-start mb-4">
-                    <div class="flex-shrink-0 rounded-circle bg-white bg-opacity-25 text-white d-flex align-items-center justify-content-center me-3 p-2">
-                        <i class="bi bi-bell fs-5"></i>
-                    </div>
-                    <div class="text-start">
-                        <div class="fw-semibold">Seguimiento en Tiempo Real</div>
-                        <div class="text-white-50 small">Recibe notificaciones sobre el estado de tu incidencia</div>
-                    </div>
-                </div>
-
-                <div class="d-flex align-items-start">
-                    <div class="flex-shrink-0 rounded-circle bg-white bg-opacity-25 text-white d-flex align-items-center justify-content-center me-3 p-2">
-                        <i class="bi bi-shield-check fs-5"></i>
-                    </div>
-                    <div class="text-start">
-                        <div class="fw-semibold">Gestión Profesional</div>
-                        <div class="text-white-50 small">Equipo especializado para resolver cada problema</div>
-                    </div>
-                </div>
-            </div>
+          }
         </div>
 
-        <!-- Panel derecho (formulario) -->
-        <div class="col-12 col-md-6 d-flex align-items-center justify-content-center bg-white p-5">
-            <div class="w-100" style="max-width:520px;">
-                <h2 class="text-center fw-bold mb-2">{{ isEditMode ? 'Editar Incidencia' : 'Nueva Incidencia' }}</h2>
-                <p class="text-center text-muted mb-4">{{ isEditMode ? 'Modifica los datos necesarios' : 'Completa el formulario con los detalles del problema' }}</p>
-
-                <form [formGroup]="incidenciaForm" (ngSubmit)="guardarIncidencia()">
-                    <div class="mb-3">
-                        <label for="titulo" class="form-label small fw-semibold">Título</label>
-                        <div class="input-group">
-                            <span class="input-group-text bg-white"><i class="bi bi-pencil"></i></span>
-                            <input id="titulo" type="text" class="form-control" formControlName="titulo" placeholder="Ej: Luz fundida en pasillo 3">
-                        </div>
-                        @if (incidenciaForm.get('titulo')?.invalid && incidenciaForm.get('titulo')?.touched) {
-                            <div class="text-danger small mt-1">
-                                @if (incidenciaForm.get('titulo')?.errors?.['required']) {
-                                    El título es requerido
-                                }
-                                @if (incidenciaForm.get('titulo')?.errors?.['maxlength']) {
-                                    Máximo 200 caracteres
-                                }
-                            </div>
-                        }
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="descripcion" class="form-label small fw-semibold">Descripción</label>
-                        <div class="input-group">
-                            <span class="input-group-text bg-white"><i class="bi bi-card-text"></i></span>
-                            <textarea id="descripcion" class="form-control" formControlName="descripcion" rows="3" placeholder="Describe el problema detalladamente"></textarea>
-                        </div>
-                        @if (incidenciaForm.get('descripcion')?.invalid && incidenciaForm.get('descripcion')?.touched) {
-                            <div class="text-danger small mt-1">La descripción es requerida</div>
-                        }
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="categoria" class="form-label small fw-semibold">Categoría</label>
-                        <div class="input-group">
-                            <span class="input-group-text bg-white"><i class="bi bi-tag"></i></span>
-                            <select id="categoria" class="form-select" formControlName="categoria">
-                                <option value="">Selecciona una categoría</option>
-                                @for (cat of categorias; track cat) {
-                                    <option [value]="cat">{{ cat }}</option>
-                                }
-                            </select>
-                        </div>
-                        @if (incidenciaForm.get('categoria')?.invalid && incidenciaForm.get('categoria')?.touched) {
-                            <div class="text-danger small mt-1">La categoría es requerida</div>
-                        }
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="ubicacion" class="form-label small fw-semibold">Ubicación</label>
-                        <div class="input-group">
-                            <span class="input-group-text bg-white"><i class="bi bi-geo-alt"></i></span>
-                            <input id="ubicacion" type="text" class="form-control" formControlName="ubicacion" placeholder="Ej: Pasillo 3, Garaje, Entrada principal">
-                        </div>
-                        @if (incidenciaForm.get('ubicacion')?.invalid && incidenciaForm.get('ubicacion')?.touched) {
-                            <div class="text-danger small mt-1">
-                                @if (incidenciaForm.get('ubicacion')?.errors?.['required']) {
-                                    La ubicación es requerida
-                                }
-                                @if (incidenciaForm.get('ubicacion')?.errors?.['maxlength']) {
-                                    Máximo 255 caracteres
-                                }
-                            </div>
-                        }
-                    </div>
-
-                    @if (isEditMode) {
-                        <div class="mb-3">
-                            <label for="estado" class="form-label small fw-semibold">Estado</label>
-                            <div class="input-group">
-                                <span class="input-group-text bg-white"><i class="bi bi-clipboard-check"></i></span>
-                                <select id="estado" class="form-select" formControlName="estado">
-                                    @for (estado of estados; track estado) {
-                                        <option [value]="estado">{{ estado }}</option>
-                                    }
-                                </select>
-                            </div>
-                        </div>
-
-                        @if (incidenciaForm.get('estado')?.value === 'Resuelta') {
-                            <div class="mb-3">
-                                <label for="fecha_resolucion" class="form-label small fw-semibold">Fecha de Resolución</label>
-                                <div class="input-group">
-                                    <span class="input-group-text bg-white"><i class="bi bi-calendar-check"></i></span>
-                                    <input id="fecha_resolucion" type="date" class="form-control" formControlName="fecha_resolucion">
-                                </div>
-                            </div>
-                        }
-                    }
-
-                    <div class="mb-3">
-                        <label for="vivienda_id" class="form-label small fw-semibold">Vivienda (Opcional)</label>
-                        <div class="input-group">
-                            <span class="input-group-text bg-white"><i class="bi bi-house"></i></span>
-                            <input id="vivienda_id" type="number" class="form-control" formControlName="vivienda_id" placeholder="ID de la vivienda">
-                        </div>
-                    </div>
-
-                    <div class="d-grid gap-2 mb-3">
-                        <button type="submit" class="btn btn-dark btn-lg rounded-pill" [disabled]="incidenciaForm.invalid">
-                            {{ isEditMode ? 'Actualizar Incidencia' : 'Crear Incidencia' }}
-                        </button>
-                        <button type="button" class="btn btn-outline-secondary rounded-pill" (click)="cancelar()">
-                            Cancelar
-                        </button>
-                    </div>
-
-                    <p class="text-center text-muted small mb-0">© 2024 ComuniRed. Todos los derechos reservados.</p>
-                </form>
+        <!-- Descripción -->
+        <div class="mb-3">
+          <label for="descripcion" class="form-label">Descripción *</label>
+          <textarea
+            id="descripcion"
+            class="form-control"
+            formControlName="descripcion"
+            rows="4"
+            placeholder="Describe el problema detalladamente"
+          ></textarea>
+          @if (incidenciaForm.get('descripcion')?.invalid && incidenciaForm.get('descripcion')?.touched) {
+            <div class="text-danger small mt-1">
+              La descripción es obligatoria
             </div>
+          }
         </div>
+
+        <!-- Categoría -->
+        <div class="mb-3">
+          <label for="categoria" class="form-label">Categoría *</label>
+          <select id="categoria" class="form-select" formControlName="categoria">
+            <option value="">Selecciona una categoría</option>
+            @for (cat of categorias; track cat) {
+              <option [value]="cat">{{ cat }}</option>
+            }
+          </select>
+          @if (incidenciaForm.get('categoria')?.invalid && incidenciaForm.get('categoria')?.touched) {
+            <div class="text-danger small mt-1">
+              La categoría es obligatoria
+            </div>
+          }
+        </div>
+
+        <!-- Ubicación -->
+        <div class="mb-3">
+          <label for="ubicacion" class="form-label">Ubicación *</label>
+          <input
+            type="text"
+            id="ubicacion"
+            class="form-control"
+            formControlName="ubicacion"
+            placeholder="Ej: Pasillo 3, Garaje, Entrada principal"
+          />
+          @if (incidenciaForm.get('ubicacion')?.invalid && incidenciaForm.get('ubicacion')?.touched) {
+            <div class="text-danger small mt-1">
+              @if (incidenciaForm.get('ubicacion')?.errors?.['required']) {
+                La ubicación es obligatoria
+              }
+              @if (incidenciaForm.get('ubicacion')?.errors?.['maxlength']) {
+                Máximo 255 caracteres
+              }
+            </div>
+          }
+        </div>
+
+        <!-- Estado (solo en modo edición) -->
+        @if (isEditMode) {
+          <div class="mb-3">
+            <label for="estado" class="form-label">Estado *</label>
+            <select id="estado" class="form-select" formControlName="estado">
+              @for (estado of estados; track estado) {
+                <option [value]="estado">{{ estado }}</option>
+              }
+            </select>
+          </div>
+
+          <!-- Fecha de Resolución (solo si está resuelta) -->
+          @if (incidenciaForm.get('estado')?.value === 'Resuelta') {
+            <div class="mb-3">
+              <label for="fecha_resolucion" class="form-label">Fecha de Resolución *</label>
+              <input
+                type="date"
+                id="fecha_resolucion"
+                class="form-control"
+                formControlName="fecha_resolucion"
+              />
+            </div>
+          }
+        }
+
+        <!-- Vivienda -->
+        <div class="mb-3">
+          <label for="vivienda_id" class="form-label">Vivienda</label>
+          <input
+            type="number"
+            id="vivienda_id"
+            class="form-control"
+            formControlName="vivienda_id"
+            placeholder="ID de la vivienda (opcional)"
+          />
+          <small class="text-muted">Opcional: Indica la vivienda relacionada si aplica</small>
+        </div>
+
+        <!-- Botones -->
+        <div class="d-flex gap-2">
+          <button
+            type="submit"
+            class="btn btn-primary rounded-pill"
+            [disabled]="!incidenciaForm.valid"
+          >
+            <i class="bi bi-check-circle me-2"></i>
+            {{ isEditMode ? 'Actualizar' : 'Crear' }} Incidencia
+          </button>
+          <button type="button" class="btn btn-outline-secondary rounded-pill" (click)="cancelar()">
+            Cancelar
+          </button>
+        </div>
+      </form>
     </div>
+  </div>
 </div>

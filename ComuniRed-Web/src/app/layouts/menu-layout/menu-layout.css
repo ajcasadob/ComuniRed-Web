@@ -1,0 +1,36 @@
+
+.nav-link {
+    border-radius: 8px;
+    padding: 10px 15px;
+    margin-bottom: 5px;
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+    background-color: #e9ecef;
+    color: #212529 !important;
+    transform: translateX(5px);
+}
+
+.nav-link:hover i {
+    color: #212529 !important;
+}
+
+.nav-link.active {
+    background-color: #0d6efd;
+    color: white !important;
+}
+
+.nav-link.active i {
+    color: white !important;
+}
+
+.nav-link.active:hover {
+    background-color: #0b5ed7;
+}
+
+/* Hover para el botón de cerrar sesión */
+.btn-outline-danger:hover {
+    transform: scale(1.02);
+    transition: all 0.3s ease;
+}
