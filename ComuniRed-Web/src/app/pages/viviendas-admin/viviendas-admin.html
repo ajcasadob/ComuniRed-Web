@@ -1,0 +1,111 @@
+<div class="container py-4">
+    <!-- Encabezado -->
+    <div class="mb-4 d-flex justify-content-between align-items-center">
+        <div>
+            <h4 class="fw-bold">Gestión de Viviendas</h4>
+            <p class="text-muted mb-0">Administración de viviendas de la comunidad</p>
+        </div>
+        <a routerLink="/viviendas/crear" class="btn btn-dark">
+            <i class="bi bi-plus-circle me-2"></i>Nueva Vivienda
+        </a>
+    </div>
+
+    @if (cargando) {
+        <div class="text-center py-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Cargando...</span>
+            </div>
+        </div>
+    } @else {
+        <!-- Tarjetas de estadísticas -->
+        <div class="row g-3 mb-4">
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h6 class="text-muted">Pisos</h6>
+                        <h3 class="text-primary">{{ contarPisos() }}</h3>
+                        <small class="text-muted">Tipo: piso</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h6 class="text-muted">Locales</h6>
+                        <h3 class="text-warning">{{ contarLocales() }}</h3>
+                        <small class="text-muted">Tipo: local</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h6 class="text-muted">Garajes</h6>
+                        <h3 class="text-secondary">{{ contarGarajes() }}</h3>
+                        <small class="text-muted">Tipo: garaje</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabla de viviendas -->
+        <div class="card">
+            <div class="card-body">
+                <h6 class="fw-bold mb-3">Lista de Viviendas</h6>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>ID</th>
+                                <th>Número</th>
+                                <th>Bloque</th>
+                                <th>Piso</th>
+                                <th>Puerta</th>
+                                <th>m²</th>
+                                <th>Tipo</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (vivienda of listaViviendas; track vivienda.id) {
+                                <tr>
+                                    <td>{{ vivienda.id }}</td>
+                                    <td><strong>{{ vivienda.numero_vivienda }}</strong></td>
+                                    <td>{{ vivienda.bloque || '-' }}</td>
+                                    <td>{{ vivienda.piso || '-' }}</td>
+                                    <td>{{ vivienda.puerta || '-' }}</td>
+                                    <td>{{ vivienda.metros_cuadrados || '-' }}</td>
+                                    <td>
+                                        <span [class]="getTipoBadgeClass(vivienda.tipo)">
+                                            {{ vivienda.tipo }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <a 
+                                                [routerLink]="['/viviendas/editar', vivienda.id]" 
+                                                class="btn btn-sm btn-outline-secondary">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+                                            <button 
+                                                class="btn btn-sm btn-outline-danger" 
+                                                (click)="eliminarVivienda(vivienda.id, vivienda.numero_vivienda)">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            } @empty {
+                                <tr>
+                                    <td colspan="8" class="text-center text-muted">
+                                        No hay viviendas registradas
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+</div>

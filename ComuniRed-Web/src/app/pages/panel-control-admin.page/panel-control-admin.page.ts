@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Reserva } from '../../interfaces/reserva.interface';
 import { Incidencia } from '../../interfaces/incidencia.interface';
-import { Pago } from '../../interfaces/pago.interface';
 import { Comunicacion } from '../../interfaces/comunicacion.interface';
+import { Estadisticas, OcupacionInstalacion } from '../../interfaces/dashboard.interface';
 import { ReservaService } from '../../services/reserva-service';
 import { IncidenciaService } from '../../services/incidencia-service';
-import { PagoService } from '../../services/pago-service';
 import { ComunicacionService } from '../../services/comunicacion-service';
 import { forkJoin } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { DashboardService } from '../../services/dashboard-service';
 
 @Component({
   selector: 'app-panel-control-admin',
@@ -19,10 +19,14 @@ import { RouterModule } from '@angular/router';
 })
 export class PanelControlAdminPage implements OnInit {
 
+  // Estadísticas desde backend
+  estadisticas: Estadisticas | null = null;
+  
+  // Datos completos desde servicios existentes
   reservas: Reserva[] = [];
   incidencias: Incidencia[] = [];
-  pagos: Pago[] = [];
   comunicaciones: Comunicacion[] = [];
+  instalaciones: OcupacionInstalacion[] = [];
   
   nombreUsuario: string = '';
   cargando: boolean = true;
@@ -30,8 +34,8 @@ export class PanelControlAdminPage implements OnInit {
   constructor(
     private reservaService: ReservaService,
     private incidenciaService: IncidenciaService,
-    private pagoService: PagoService,
-    private comunicacionService: ComunicacionService
+    private comunicacionService: ComunicacionService,
+    private dashboardService: DashboardService
   ) {}
 
   ngOnInit(): void {
@@ -41,16 +45,17 @@ export class PanelControlAdminPage implements OnInit {
 
   cargarDatos(): void {
     forkJoin({
+      estadisticas: this.dashboardService.getEstadisticas(),
       reservas: this.reservaService.getAllReservas(),
       incidencias: this.incidenciaService.getAllIncidencias(),
-      pagos: this.pagoService.getAllPagos(),
       comunicaciones: this.comunicacionService.getAllComunicaciones()
     }).subscribe({
       next: (data) => {
+        this.estadisticas = data.estadisticas;
         this.reservas = data.reservas;
         this.incidencias = data.incidencias;
-        this.pagos = data.pagos;
         this.comunicaciones = data.comunicaciones;
+        this.instalaciones = data.estadisticas.ocupacion_instalaciones;
         this.cargando = false;
         console.log('Dashboard cargado:', data);
       },
@@ -66,40 +71,34 @@ export class PanelControlAdminPage implements OnInit {
     this.nombreUsuario = user || 'Admin';
   }
 
-  // ========== ESTADÍSTICAS ==========
+  // ========== ESTADÍSTICAS (desde backend) ==========
 
   getReservasActivas(): number {
-    const hoy = new Date();
-    return this.reservas.filter(r => {
-      const fechaReserva = new Date(r.fecha_reserva);
-      return fechaReserva >= hoy && (r.estado === 'confirmada' || r.estado === 'pendiente');
-    }).length;
+    return this.estadisticas?.reservas_activas ?? 0;
   }
 
   getIncidenciasPendientes(): number {
-    return this.incidencias.filter(i => i.estado === 'pendiente' || i.estado === 'en_proceso').length;
+    return this.estadisticas?.incidencias_pendientes ?? 0;
   }
 
   getIncidenciasUrgentes(): number {
-    return this.incidencias.filter(i => 
-      (i.estado === 'pendiente' || i.estado === 'en_proceso') && 
-      (i.categoria === 'urgente' || i.categoria === 'alta')
-    ).length;
+    return this.estadisticas?.incidencias_urgentes ?? 0;
   }
 
   getTasaCobro(): number {
-    const total = this.pagos.reduce((sum, p) => sum + Number(p.importe), 0);
-    const pagado = this.pagos
-      .filter(p => p.estado === 'pagado')
-      .reduce((sum, p) => sum + Number(p.importe), 0);
-    return total > 0 ? (pagado / total) * 100 : 0;
+    return this.estadisticas?.tasa_cobro ?? 0;
   }
 
   getVecinosRegistrados(): number {
-    return 48;
+    return this.estadisticas?.vecinos_registrados ?? 0;
   }
 
-  // ========== PRÓXIMAS RESERVAS ==========
+  getOcupacionInstalacion(clave: string): number {
+    const instalacion = this.instalaciones.find(i => i.clave === clave);
+    return instalacion?.porcentaje ?? 0;
+  }
+
+  // ========== PRÓXIMAS RESERVAS (filtrado local) ==========
 
   getProximasReservas(): Reserva[] {
     const hoy = new Date();
@@ -132,7 +131,7 @@ export class PanelControlAdminPage implements OnInit {
     return reserva.usuario?.name || 'Usuario';
   }
 
-  // ========== INCIDENCIAS RECIENTES ==========
+  // ========== INCIDENCIAS RECIENTES (filtrado local) ==========
 
   getIncidenciasRecientes(): Incidencia[] {
     return this.incidencias
@@ -142,10 +141,16 @@ export class PanelControlAdminPage implements OnInit {
 
   getEstadoBadgeIncidencia(estado: string): string {
     switch(estado.toLowerCase()) {
-      case 'resuelta': return 'bg-success';
-      case 'en_proceso': return 'bg-secondary';
-      case 'pendiente': return 'bg-danger';
-      default: return 'bg-secondary';
+      case 'resuelta': 
+      case 'resuelto': 
+        return 'bg-success';
+      case 'en proceso': 
+      case 'en_proceso': 
+        return 'bg-primary';
+      case 'pendiente': 
+        return 'bg-warning';
+      default: 
+        return 'bg-secondary';
     }
   }
 
@@ -153,7 +158,7 @@ export class PanelControlAdminPage implements OnInit {
     return incidencia.categoria || 'media';
   }
 
-  // ========== COMUNICACIONES IMPORTANTES ==========
+  // ========== COMUNICACIONES IMPORTANTES (filtrado local) ==========
 
   getComunicacionesImportantes(): Comunicacion[] {
     return this.comunicaciones
@@ -168,26 +173,8 @@ export class PanelControlAdminPage implements OnInit {
       case 'mantenimiento': return 'bg-primary';
       case 'aviso': return 'bg-warning';
       case 'urgente': return 'bg-danger';
+      case 'general': return 'bg-info';
       default: return 'bg-secondary';
     }
   }
-
-  // ========== OCUPACIÓN DE INSTALACIONES ==========
-
-  getOcupacionInstalacion(nombreInstalacion: string): number {
-    const totalReservas = this.reservas.filter(r => 
-      r.nombre_espacio.toLowerCase().includes(nombreInstalacion.toLowerCase())
-    ).length;
-    
-    const slotsDisponibles = 10;
-    return totalReservas > 0 ? Math.min((totalReservas / slotsDisponibles) * 100, 100) : 0;
-  }
-
-  instalaciones = [
-    { nombre: 'Pistas de Pádel', clave: 'padel' },
-    { nombre: 'Gimnasio', clave: 'gimnasio' },
-    { nombre: 'Sala Gourmet', clave: 'gourmet' },
-    { nombre: 'Mesa Ping Pong', clave: 'ping pong' }
-  ];
-
 }

@@ -19,7 +19,7 @@
                     <div class="card-body">
                         <h6 class="text-muted">Reservas Activas</h6>
                         <h3>{{ getReservasActivas() }}</h3>
-                        <small class="text-muted">Esta semana</small>
+                        <small class="text-muted">Confirmadas y pendientes</small>
                     </div>
                 </div>
             </div>
@@ -37,7 +37,7 @@
                     <div class="card-body">
                         <h6 class="text-muted">Tasa de Cobro</h6>
                         <h3>{{ getTasaCobro().toFixed(1) }}%</h3>
-                        <small class="text-muted">Este mes</small>
+                        <small class="text-muted">Pagos realizados</small>
                     </div>
                 </div>
             </div>
@@ -56,7 +56,7 @@
         <div class="card mb-4">
             <div class="card-body">
                 <h6 class="fw-bold mb-3">Accesos Rápidos</h6>
-                <p class="text-muted">Funciones más utilizadas</p>
+                <p class="text-muted mb-3">Funciones más utilizadas</p>
                 <div class="d-flex flex-wrap gap-3">
                     <a routerLink="/reserva-form" class="btn btn-outline-secondary">
                         <i class="bi bi-calendar-plus me-2"></i>Nueva Reserva
@@ -79,18 +79,31 @@
             <div class="col-md-6">
                 <div class="card h-100">
                     <div class="card-body">
-                        <h6 class="fw-bold mb-3">Próximas Reservas</h6>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h6 class="fw-bold mb-0">Próximas Reservas</h6>
+                            <a routerLink="/reservas-admin" class="btn btn-sm btn-outline-primary">Ver todas</a>
+                        </div>
                         @if (getProximasReservas().length > 0) {
                             <ul class="list-group list-group-flush">
                                 @for (reserva of getProximasReservas(); track reserva.id) {
-                                    <li class="list-group-item">
-                                        <strong>{{ reserva.nombre_espacio }}</strong><br>
-                                        <small>{{ formatearFechaReserva(reserva) }} — {{ getNombreUsuarioReserva(reserva) }}</small>
+                                    <li class="list-group-item px-0">
+                                        <div class="d-flex justify-content-between align-items-start">
+                                            <div>
+                                                <strong class="d-block">{{ reserva.nombre_espacio }}</strong>
+                                                <small class="text-muted">
+                                                    {{ formatearFechaReserva(reserva) }}
+                                                </small>
+                                            </div>
+                                            <span class="badge bg-dark">{{ getNombreUsuarioReserva(reserva) }}</span>
+                                        </div>
                                     </li>
                                 }
                             </ul>
                         } @else {
-                            <p class="text-muted">No hay reservas próximas</p>
+                            <div class="text-center py-4">
+                                <i class="bi bi-calendar-x text-muted" style="font-size: 2rem;"></i>
+                                <p class="text-muted mt-2 mb-0">No hay reservas próximas</p>
+                            </div>
                         }
                     </div>
                 </div>
@@ -100,19 +113,32 @@
             <div class="col-md-6">
                 <div class="card h-100">
                     <div class="card-body">
-                        <h6 class="fw-bold mb-3">Incidencias Recientes</h6>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h6 class="fw-bold mb-0">Incidencias Recientes</h6>
+                            <a routerLink="/incidencias" class="btn btn-sm btn-outline-primary">Ver todas</a>
+                        </div>
                         @if (getIncidenciasRecientes().length > 0) {
                             @for (incidencia of getIncidenciasRecientes(); track incidencia.id) {
-                                <div class="mb-3">
-                                    <strong>{{ incidencia.titulo }}</strong><br>
-                                    <small class="text-muted">{{ incidencia.estado }}</small>
-                                    <span class="badge float-end" [ngClass]="getEstadoBadgeIncidencia(incidencia.estado)">
-                                        {{ getPrioridadTexto(incidencia) }}
-                                    </span>
+                                <div class="border-bottom pb-3 mb-3">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <strong class="d-block">{{ incidencia.titulo }}</strong>
+                                            <small class="text-muted">{{ incidencia.ubicacion }}</small>
+                                        </div>
+                                        <span class="badge" [ngClass]="getEstadoBadgeIncidencia(incidencia.estado)">
+                                            {{ incidencia.estado }}
+                                        </span>
+                                    </div>
+                                    <small class="text-muted d-block mt-2">
+                                        <i class="bi bi-tag me-1"></i>{{ getPrioridadTexto(incidencia) }}
+                                    </small>
                                 </div>
                             }
                         } @else {
-                            <p class="text-muted">No hay incidencias recientes</p>
+                            <div class="text-center py-4">
+                                <i class="bi bi-check-circle text-muted" style="font-size: 2rem;"></i>
+                                <p class="text-muted mt-2 mb-0">No hay incidencias recientes</p>
+                            </div>
                         }
                     </div>
                 </div>
@@ -122,19 +148,32 @@
         <!-- Anuncios importantes -->
         <div class="card mb-4">
             <div class="card-body">
-                <h6 class="fw-bold mb-3">Anuncios Importantes</h6>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h6 class="fw-bold mb-0">Anuncios Importantes</h6>
+                    <a routerLink="/comunicaciones" class="btn btn-sm btn-outline-primary">Ver todos</a>
+                </div>
                 @if (getComunicacionesImportantes().length > 0) {
                     @for (comunicacion of getComunicacionesImportantes(); track comunicacion.id) {
                         <div class="p-3 mb-3 bg-light rounded">
-                            <span class="badge me-2" [ngClass]="getTipoBadgeComunicacion(comunicacion.tipo)">
-                                {{ comunicacion.tipo }}
-                            </span>
-                            <strong>{{ comunicacion.titulo }}</strong>
-                            <p class="mb-0 text-muted mt-2">{{ comunicacion.contenido }}</p>
+                            <div class="d-flex align-items-start">
+                                <span class="badge me-2" [ngClass]="getTipoBadgeComunicacion(comunicacion.tipo)">
+                                    {{ comunicacion.tipo }}
+                                </span>
+                                <div class="flex-grow-1">
+                                    <strong class="d-block">{{ comunicacion.titulo }}</strong>
+                                    <p class="mb-0 text-muted mt-2">{{ comunicacion.contenido }}</p>
+                                    <small class="text-muted d-block mt-2">
+                                        <i class="bi bi-calendar3 me-1"></i>{{ comunicacion.fecha_publicacion }}
+                                    </small>
+                                </div>
+                            </div>
                         </div>
                     }
                 } @else {
-                    <p class="text-muted">No hay anuncios recientes</p>
+                    <div class="text-center py-4">
+                        <i class="bi bi-megaphone text-muted" style="font-size: 2rem;"></i>
+                        <p class="text-muted mt-2 mb-0">No hay anuncios recientes</p>
+                    </div>
                 }
             </div>
         </div>
@@ -143,20 +182,31 @@
         <div class="card mb-4">
             <div class="card-body">
                 <h6 class="fw-bold mb-3">Ocupación de Instalaciones</h6>
-                <p class="text-muted">Esta semana</p>
+                <p class="text-muted mb-4">Esta semana</p>
 
-                @for (instalacion of instalaciones; track instalacion.nombre) {
-                    <div class="mb-3">
-                        <div class="d-flex justify-content-between">
-                            <span>{{ instalacion.nombre }}</span>
-                            <span>{{ getOcupacionInstalacion(instalacion.clave).toFixed(0) }}%</span>
-                        </div>
-                        <div class="progress">
-                            <div 
-                                class="progress-bar bg-dark" 
-                                [style.width.%]="getOcupacionInstalacion(instalacion.clave)">
+                @if (instalaciones.length > 0) {
+                    @for (instalacion of instalaciones; track instalacion.nombre) {
+                        <div class="mb-4">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="fw-medium">{{ instalacion.nombre }}</span>
+                                <span class="text-muted">{{ instalacion.porcentaje }}%</span>
+                            </div>
+                            <div class="progress" style="height: 10px;">
+                                <div 
+                                    class="progress-bar bg-dark" 
+                                    role="progressbar"
+                                    [style.width.%]="instalacion.porcentaje"
+                                    [attr.aria-valuenow]="instalacion.porcentaje"
+                                    aria-valuemin="0"
+                                    aria-valuemax="100">
+                                </div>
                             </div>
                         </div>
+                    }
+                } @else {
+                    <div class="text-center py-4">
+                        <i class="bi bi-bar-chart text-muted" style="font-size: 2rem;"></i>
+                        <p class="text-muted mt-2 mb-0">No hay datos de ocupación disponibles</p>
                     </div>
                 }
             </div>

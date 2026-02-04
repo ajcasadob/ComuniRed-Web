@@ -12,6 +12,10 @@ import { ComunicacionForm } from './pages/comunicacion-form/comunicacion-form';
 import { ReservaForm } from './pages/reserva-form/reserva-form';
 import { PagoForm } from './pages/pago-form/pago-form';
 import { FormularioReservaPage } from './pages/formulario-reserva-page/formulario-reserva-page';
+import { UsuariosAdmin } from './pages/usuarios-admin/usuarios-admin';
+import { ViviendasFormAdmin } from './pages/viviendas-form-admin/viviendas-form-admin';
+import { ViviendasAdmin } from './pages/viviendas-admin/viviendas-admin';
+import { UsuarioFormulario } from './pages/usuario-formulario/usuario-formulario';
 
 export const routes: Routes = [
     {
@@ -89,6 +93,27 @@ export const routes: Routes = [
     {
         path: 'pago-form/:id',
         component: PagoForm
+    },
+    {
+        path: 'usuarios',
+        component: UsuariosAdmin
+    },
+    {
+        path:'usuarios/editar/:id',
+        component:UsuarioFormulario
+    },
+    {
+        path:'viviendas',
+        component:ViviendasAdmin
+    },
+    {
+        path:'viviendas/crear',
+        component:ViviendasFormAdmin
+
+    },
+    {
+        path:'viviedas/editar/:id',
+        component:ViviendasFormAdmin
     }
 
 

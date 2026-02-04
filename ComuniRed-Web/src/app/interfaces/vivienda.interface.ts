@@ -5,7 +5,7 @@ export interface Vivienda {
     piso: string | null;
     puerta: string | null;
     metros_cuadrados: number | null;
-    tipo: string;
+    tipo: 'piso' | 'local' | 'garaje';
     created_at: string;
     updated_at: string;
 }
@@ -17,7 +17,7 @@ export interface ViviendaResponse {
     piso: string | null;
     puerta: string | null;
     metros_cuadrados: number | null;
-    tipo: string;
+    tipo: 'piso' | 'local' | 'garaje';
     created_at: string;
     updated_at: string;
 }
