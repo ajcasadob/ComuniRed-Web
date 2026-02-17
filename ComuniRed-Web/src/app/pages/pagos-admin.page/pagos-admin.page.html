@@ -82,23 +82,6 @@
                                 <td>{{ formatearFecha(pago.fecha_pago) }}</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm" role="group">
-                                        @if (pago.estado === 'pagado') {
-                                            <!-- Botón descargar recibo -->
-                                            <button 
-                                                class="btn btn-outline-secondary"
-                                                title="Descargar recibo">
-                                                <i class="bi bi-download"></i>
-                                            </button>
-                                        } @else {
-                                            <!-- Botón registrar pago rápido -->
-                                            <a 
-                                                [routerLink]="['/pago-form', pago.id]"
-                                                class="btn btn-dark"
-                                                title="Registrar pago">
-                                                <i class="bi bi-cash"></i>
-                                            </a>
-                                        }
-                                        
                                         <!-- Botón editar -->
                                         <a 
                                             [routerLink]="['/pago-form', pago.id]"

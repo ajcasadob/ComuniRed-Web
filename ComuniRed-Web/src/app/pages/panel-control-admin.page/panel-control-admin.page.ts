@@ -105,7 +105,7 @@ export class PanelControlAdminPage implements OnInit {
     return this.reservas
       .filter(r => {
         const fechaReserva = new Date(r.fecha_reserva);
-        return fechaReserva >= hoy && r.estado === 'confirmada';
+        return fechaReserva >= hoy && r.estado !== 'cancelada';
       })
       .sort((a, b) => new Date(a.fecha_reserva).getTime() - new Date(b.fecha_reserva).getTime())
       .slice(0, 3);
