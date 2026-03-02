@@ -43,18 +43,26 @@ export class ReservaForm  implements OnInit{
   }
 
   cargarReserva(): void {
-    if (this.reservaId) {
-      this.reservaService.getReservaById(this.reservaId).subscribe({
-        next: (reserva) => {
-          this.reservaForm.patchValue(reserva);
-        },
-        error: (error) => {
-          console.error('Error al cargar reserva:', error);
-          alert('Error al cargar la reserva');
-        },
-      });
-    }
+  if (this.reservaId) {
+    this.reservaService.getReservaById(this.reservaId).subscribe({
+      next: (reserva) => {
+        this.reservaForm.patchValue({
+          nombre_espacio: reserva.nombre_espacio,
+          usuario_id: reserva.usuario_id,
+          fecha_reserva: reserva.fecha_reserva,
+          hora_inicio: reserva.hora_inicio?.substring(0, 5),  
+          hora_fin: reserva.hora_fin?.substring(0, 5),      
+          estado: reserva.estado,
+        });
+      },
+      error: (error) => {
+        console.error('Error al cargar reserva:', error);
+        alert('Error al cargar la reserva');
+      },
+    });
   }
+}
+
 
   onSubmit(): void {
     if (this.reservaForm.valid) {

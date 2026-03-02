@@ -71,6 +71,12 @@ export class PanelControlAdminPage implements OnInit {
     this.nombreUsuario = user || 'Admin';
   }
 
+  private getHoy(){
+    const hoy = new Date();
+    hoy.setHours(0,0,0,0);
+    return hoy;
+  }
+
   // ========== ESTADÍSTICAS (desde backend) ==========
 
   getReservasActivas(): number {
@@ -101,7 +107,7 @@ export class PanelControlAdminPage implements OnInit {
   // ========== PRÓXIMAS RESERVAS (filtrado local) ==========
 
   getProximasReservas(): Reserva[] {
-    const hoy = new Date();
+    const hoy = this.getHoy();
     return this.reservas
       .filter(r => {
         const fechaReserva = new Date(r.fecha_reserva);
@@ -113,7 +119,7 @@ export class PanelControlAdminPage implements OnInit {
 
   formatearFechaReserva(reserva: Reserva): string {
     const fecha = new Date(reserva.fecha_reserva);
-    const hoy = new Date();
+    const hoy = this.getHoy();
     const manana = new Date(hoy);
     manana.setDate(hoy.getDate() + 1);
 
