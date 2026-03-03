@@ -112,7 +112,7 @@ export const routes: Routes = [
 
     },
     {
-        path:'viviedas/editar/:id',
+        path:'viviendas/editar/:id',
         component:ViviendasFormAdmin
     }
 
