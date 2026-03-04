@@ -124,6 +124,34 @@
           <small class="text-muted">Opcional: Indica la vivienda relacionada si aplica</small>
         </div>
 
+        <!-- Prioridad -->
+        <div class="mb-3">
+          <label for="prioridad" class="form-label">Prioridad *</label>
+          <select id="prioridad" class="form-select" formControlName="prioridad">
+            @for (p of prioridades; track p) {
+              <option [value]="p">{{ p | titlecase }}</option>
+            }
+          </select>
+        </div>
+
+        <!-- Foto -->
+        <div class="mb-3">
+          <label for="foto" class="form-label">Foto</label>
+          @if (fotoActual) {
+            <div class="mb-2">
+              <img [src]="'http://127.0.0.1:8000/storage/' + fotoActual" alt="Foto actual" class="img-thumbnail" style="max-height: 150px;" />
+              <small class="d-block text-muted mt-1">Foto actual. Selecciona una nueva para reemplazarla.</small>
+            </div>
+          }
+          <input
+            type="file"
+            id="foto"
+            class="form-control"
+            accept="image/*"
+            (change)="onFileChange($event)"
+          />
+        </div>
+
         <!-- Botones -->
         <div class="d-flex gap-2">
           <button

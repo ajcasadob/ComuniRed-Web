@@ -20,18 +20,22 @@ export class IncidenciaAdminFormPage implements OnInit {
     descripcion: new FormControl('', [Validators.required]),
     ubicacion: new FormControl('', [Validators.required, Validators.maxLength(255)]),
     categoria: new FormControl('', [Validators.required, Validators.maxLength(50)]),
+    prioridad: new FormControl('media', [Validators.required]),
     estado: new FormControl('Pendiente', [Validators.required]),
-    usuario_id: new FormControl(this.obtenerUsuarioId(), [Validators.required]), // Cambiar por el usuario actual
+    usuario_id: new FormControl(this.obtenerUsuarioId(), [Validators.required]),
     vivienda_id: new FormControl<number | null>(null),
     fecha_resolucion: new FormControl<string | null>(null),
-    imagen_url: new FormControl<string | null>(null, [Validators.maxLength(500)])
   });
+
+  fotoSeleccionada: File | null = null;
+  fotoActual: string | null = null;
 
   incidenciaId: number | null = null;
   isEditMode: boolean = false;
 
-  categorias = ['Electricidad', 'Fontanería', 'Ascensor', 'Limpieza', 'Seguridad', 'Otro'];
+  categorias = ['Electricidad', 'Fontanería', 'Ascensor', 'Limpieza', 'Seguridad', 'Fontaneria', 'Albanileria', 'Otro'];
   estados = ['Pendiente', 'En Proceso', 'Resuelta'];
+  prioridades = ['baja', 'media', 'alta'];
 
   constructor(
     private incidenciaService: IncidenciaService,
@@ -62,12 +66,13 @@ export class IncidenciaAdminFormPage implements OnInit {
           descripcion: data.descripcion,
           ubicacion: data.ubicacion,
           categoria: data.categoria,
+          prioridad: data.prioridad,
           estado: data.estado,
           usuario_id: data.usuario_id,
           vivienda_id: data.vivienda_id,
           fecha_resolucion: data.fecha_resolucion,
-          imagen_url: data.imagen_url
         });
+        this.fotoActual = data.foto;
       },
       (error) => {
         console.error('Error al cargar incidencia:', error);
@@ -88,11 +93,12 @@ export class IncidenciaAdminFormPage implements OnInit {
       this.incidenciaForm.get('descripcion')?.value!,
       this.incidenciaForm.get('ubicacion')?.value!,
       this.incidenciaForm.get('categoria')?.value!,
+      this.incidenciaForm.get('prioridad')?.value!,
       this.incidenciaForm.get('estado')?.value!,
       this.incidenciaForm.get('usuario_id')?.value!,
       this.incidenciaForm.get('vivienda_id')?.value,
       this.incidenciaForm.get('fecha_resolucion')?.value,
-      this.incidenciaForm.get('imagen_url')?.value
+      this.fotoSeleccionada
     );
 
     if (this.isEditMode && this.incidenciaId) {
@@ -117,6 +123,15 @@ export class IncidenciaAdminFormPage implements OnInit {
           alert('Error al crear la incidencia');
         }
       );
+    }
+  }
+
+  onFileChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.fotoSeleccionada = input.files[0];
+    } else {
+      this.fotoSeleccionada = null;
     }
   }
 

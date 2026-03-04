@@ -22,11 +22,36 @@ export class IncidenciaService {
   }
 
   createIncidencia(incidencia: IncidenciaDTO): Observable<IncidenciaResponse> {
-    return this.http.post<IncidenciaResponse>(`${this.URL_BASE}/incidencias`, incidencia);
+    const formData = this.toFormData(incidencia);
+    return this.http.post<IncidenciaResponse>(`${this.URL_BASE}/incidencias`, formData);
   }
 
   updateIncidencia(id: number, incidencia: IncidenciaDTO): Observable<IncidenciaResponse> {
-    return this.http.put<IncidenciaResponse>(`${this.URL_BASE}/incidencias/${id}`, incidencia);
+    const formData = this.toFormData(incidencia);
+    // Laravel requiere POST + _method=PUT para subida de archivos
+    formData.append('_method', 'PUT');
+    return this.http.post<IncidenciaResponse>(`${this.URL_BASE}/incidencias/${id}`, formData);
+  }
+
+  private toFormData(incidencia: IncidenciaDTO): FormData {
+    const formData = new FormData();
+    formData.append('titulo', incidencia.titulo);
+    formData.append('descripcion', incidencia.descripcion);
+    formData.append('ubicacion', incidencia.ubicacion);
+    formData.append('categoria', incidencia.categoria);
+    formData.append('prioridad', incidencia.prioridad);
+    formData.append('estado', incidencia.estado);
+    formData.append('usuario_id', incidencia.usuario_id.toString());
+    if (incidencia.vivienda_id != null) {
+      formData.append('vivienda_id', incidencia.vivienda_id.toString());
+    }
+    if (incidencia.fecha_resolucion) {
+      formData.append('fecha_resolucion', incidencia.fecha_resolucion);
+    }
+    if (incidencia.foto instanceof File) {
+      formData.append('foto', incidencia.foto);
+    }
+    return formData;
   }
 
   deleteIncidencia(id: number): Observable<any> {
