@@ -27,9 +27,6 @@ export class IncidenciaAdminFormPage implements OnInit {
     fecha_resolucion: new FormControl<string | null>(null),
   });
 
-  fotoSeleccionada: File | null = null;
-  fotoActual: string | null = null;
-
   incidenciaId: number | null = null;
   isEditMode: boolean = false;
 
@@ -72,7 +69,6 @@ export class IncidenciaAdminFormPage implements OnInit {
           vivienda_id: data.vivienda_id,
           fecha_resolucion: data.fecha_resolucion,
         });
-        this.fotoActual = data.foto;
       },
       (error) => {
         console.error('Error al cargar incidencia:', error);
@@ -97,8 +93,7 @@ export class IncidenciaAdminFormPage implements OnInit {
       this.incidenciaForm.get('estado')?.value!,
       this.incidenciaForm.get('usuario_id')?.value!,
       this.incidenciaForm.get('vivienda_id')?.value,
-      this.incidenciaForm.get('fecha_resolucion')?.value,
-      this.fotoSeleccionada
+      this.incidenciaForm.get('fecha_resolucion')?.value
     );
 
     if (this.isEditMode && this.incidenciaId) {
@@ -123,15 +118,6 @@ export class IncidenciaAdminFormPage implements OnInit {
           alert('Error al crear la incidencia');
         }
       );
-    }
-  }
-
-  onFileChange(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      this.fotoSeleccionada = input.files[0];
-    } else {
-      this.fotoSeleccionada = null;
     }
   }
 

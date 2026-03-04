@@ -18,11 +18,6 @@ export class IncidenciasAdminPage implements OnInit {
   incidenciasEnProceso: number = 0;
   incidenciasResueltas: number = 0;
 
-  fotoModalUrl: string | null = null;
-  fotoModalTitulo: string = '';
-  mostrarModalFoto: boolean = false;
-
-  readonly BASE_STORAGE = 'http://127.0.0.1:8000/storage/';
 
   constructor(
     private incidenciaService: IncidenciaService,
@@ -72,17 +67,6 @@ export class IncidenciasAdminPage implements OnInit {
     if (estadoLower === 'en proceso') return 'text-primary';
     if (estadoLower === 'resuelta' || estadoLower === 'resuelto') return 'text-success';
     return 'text-secondary';
-  }
-
-  verFoto(incidencia: Incidencia): void {
-    this.fotoModalUrl = this.BASE_STORAGE + incidencia.foto;
-    this.fotoModalTitulo = incidencia.titulo;
-    this.mostrarModalFoto = true;
-  }
-
-  cerrarModalFoto(): void {
-    this.mostrarModalFoto = false;
-    this.fotoModalUrl = null;
   }
 
   nuevaIncidencia(): void {

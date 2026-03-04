@@ -8,7 +8,6 @@ export class IncidenciaDTO {
     usuario_id: number;
     vivienda_id?: number | null;
     fecha_resolucion?: string | null;
-    foto?: File | null;
 
     constructor(
         titulo: string,
@@ -19,8 +18,7 @@ export class IncidenciaDTO {
         estado: string,
         usuario_id: number,
         vivienda_id?: number | null,
-        fecha_resolucion?: string | null,
-        foto?: File | null
+        fecha_resolucion?: string | null
     ) {
         this.titulo = titulo;
         this.descripcion = descripcion;
@@ -31,6 +29,5 @@ export class IncidenciaDTO {
         this.usuario_id = usuario_id;
         this.vivienda_id = vivienda_id;
         this.fecha_resolucion = fecha_resolucion;
-        this.foto = foto;
     }
 }

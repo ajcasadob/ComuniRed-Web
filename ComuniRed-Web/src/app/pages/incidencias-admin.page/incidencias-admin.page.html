@@ -87,15 +87,6 @@
                                         >
                                             <i class="bi bi-pencil"></i>
                                         </button>
-                                        @if (incidencia.foto) {
-                                            <button
-                                                class="btn btn-outline-info"
-                                                (click)="verFoto(incidencia)"
-                                                title="Ver foto"
-                                            >
-                                                <i class="bi bi-image"></i>
-                                            </button>
-                                        }
                                         <button 
                                             type="button" 
                                             class="btn btn-outline-danger"
@@ -121,20 +112,3 @@
         </div>
     </div>
 </div>
-
-<!-- Modal foto -->
-@if (mostrarModalFoto) {
-  <div class="modal d-block" tabindex="-1" style="background: rgba(0,0,0,0.6);" (click)="cerrarModalFoto()">
-    <div class="modal-dialog modal-dialog-centered modal-lg" (click)="$event.stopPropagation()">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">{{ fotoModalTitulo }}</h5>
-          <button type="button" class="btn-close" (click)="cerrarModalFoto()"></button>
-        </div>
-        <div class="modal-body text-center">
-          <img [src]="fotoModalUrl" alt="Foto incidencia" class="img-fluid rounded" />
-        </div>
-      </div>
-    </div>
-  </div>
-}
