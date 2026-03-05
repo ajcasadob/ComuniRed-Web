@@ -121,9 +121,9 @@
                             @for (incidencia of getIncidenciasRecientes(); track incidencia.id) {
                                 <div class="border-bottom pb-3 mb-3">
                                     <div class="d-flex justify-content-between align-items-start">
-                                        <div>
-                                            <strong class="d-block">{{ incidencia.titulo }}</strong>
-                                            <small class="text-muted">{{ incidencia.ubicacion }}</small>
+                                        <div style="min-width: 0; flex: 1;">
+                                            <strong class="d-block text-truncate">{{ incidencia.titulo }}</strong>
+                                            <small class="text-muted text-truncate d-block">{{ incidencia.ubicacion }}</small>
                                         </div>
                                         <span class="badge" [ngClass]="getEstadoBadgeIncidencia(incidencia.estado)">
                                             {{ incidencia.estado }}
@@ -159,11 +159,11 @@
                                 <span class="badge me-2" [ngClass]="getTipoBadgeComunicacion(comunicacion.tipo)">
                                     {{ comunicacion.tipo }}
                                 </span>
-                                <div class="flex-grow-1">
-                                    <strong class="d-block">{{ comunicacion.titulo }}</strong>
-                                    <p class="mb-0 text-muted mt-2">{{ comunicacion.contenido }}</p>
+                                <div class="flex-grow-1" style="min-width: 0;">
+                                    <strong class="d-block text-truncate">{{ comunicacion.titulo }}</strong>
+                                    <p class="mb-0 text-muted mt-2" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">{{ comunicacion.contenido }}</p>
                                     <small class="text-muted d-block mt-2">
-                                        <i class="bi bi-calendar3 me-1"></i>{{ comunicacion.fecha_publicacion }}
+                                        <i class="bi bi-calendar3 me-1"></i>{{ comunicacion.fecha_publicacion | date:'d/M/yyyy' }}
                                     </small>
                                 </div>
                             </div>

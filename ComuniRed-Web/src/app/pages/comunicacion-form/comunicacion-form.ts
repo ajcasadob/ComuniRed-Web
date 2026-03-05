@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-comunicacion-form',
-  imports: [ReactiveFormsModule, CommonModule, RouterLink],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './comunicacion-form.html',
   styleUrl: './comunicacion-form.css',
 })
@@ -66,7 +66,9 @@ export class ComunicacionForm implements OnInit {
 
     const { titulo, contenido, tipo, autor_id, fecha_publicacion, activa } = this.comunicacionForm.value;
     const comunicacionDTO = new ComunicacionDTO(titulo!, contenido!, tipo!, autor_id!, fecha_publicacion!, activa!);
-
+    console.log(this.comunicacionForm , 'esto es el formularioo')
+    console.log(comunicacionDTO, 'este es mi dto')
+    console.log(this.comunicacionId, 'este es el')
     const operacion = this.comunicacionId 
       ? this.comunicacionService.updateComunicacion(this.comunicacionId, comunicacionDTO)
       : this.comunicacionService.createComunicacion(comunicacionDTO);
