@@ -15,10 +15,12 @@
             <div class="row g-3">
                 @for (instalacion of instalaciones; track instalacion.nombre) {
                     <div class="col-6 col-md-4 col-lg-2">
-                        <div class="card h-100 text-center">
-                            <div class="card-body d-flex flex-column justify-content-center align-items-center">
-                                <i [class]="'bi ' + instalacion.icono + ' fs-3 mb-2'"></i>
-                                <div class="card-text">{{ instalacion.nombre }}</div>
+                        <div class="card h-100 text-center" style="cursor: default;">
+                            <div class="card-body d-flex flex-column justify-content-center align-items-center p-3">
+                                <div class="stat-icon stat-icon-primary mb-2">
+                                    <i [class]="'bi ' + instalacion.icono"></i>
+                                </div>
+                                <div class="card-text fw-medium" style="font-size: 0.82rem;">{{ instalacion.nombre }}</div>
                             </div>
                         </div>
                     </div>

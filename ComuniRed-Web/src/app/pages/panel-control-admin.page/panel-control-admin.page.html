@@ -1,8 +1,8 @@
 <div class="container py-4">
     <!-- Encabezado -->
-    <div class="mb-4">
-        <h4 class="fw-bold">Bienvenido, {{ nombreUsuario }}</h4>
-        <p class="text-muted mb-0">Panel de administración de la comunidad</p>
+    <div class="mb-4 pb-3" style="border-bottom: 1px solid #e2e8f0;">
+        <h4 class="fw-bold mb-1" style="color:#1e293b;">Bienvenido, {{ nombreUsuario }}</h4>
+        <p class="mb-0" style="color:#64748b;">Panel de administración de la comunidad</p>
     </div>
 
     @if (cargando) {
@@ -15,37 +15,57 @@
         <!-- Tarjetas superiores -->
         <div class="row g-3 mb-4">
             <div class="col-md-3">
-                <div class="card h-100">
+                <div class="card h-100 stat-card-primary">
                     <div class="card-body">
-                        <h6 class="text-muted">Reservas Activas</h6>
-                        <h3>{{ getReservasActivas() }}</h3>
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h6 class="text-muted mb-0">Reservas Activas</h6>
+                            <div class="stat-icon stat-icon-primary">
+                                <i class="bi bi-calendar-check"></i>
+                            </div>
+                        </div>
+                        <h3 class="fw-bold mb-0">{{ getReservasActivas() }}</h3>
                         <small class="text-muted">Confirmadas y pendientes</small>
                     </div>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="card h-100">
+                <div class="card h-100 stat-card-warning">
                     <div class="card-body">
-                        <h6 class="text-muted">Incidencias Pendientes</h6>
-                        <h3>{{ getIncidenciasPendientes() }}</h3>
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h6 class="text-muted mb-0">Incidencias Pendientes</h6>
+                            <div class="stat-icon stat-icon-warning">
+                                <i class="bi bi-exclamation-triangle"></i>
+                            </div>
+                        </div>
+                        <h3 class="fw-bold mb-0">{{ getIncidenciasPendientes() }}</h3>
                         <small class="text-muted">{{ getIncidenciasUrgentes() }} urgentes</small>
                     </div>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="card h-100">
+                <div class="card h-100 stat-card-success">
                     <div class="card-body">
-                        <h6 class="text-muted">Tasa de Cobro</h6>
-                        <h3>{{ getTasaCobro().toFixed(1) }}%</h3>
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h6 class="text-muted mb-0">Tasa de Cobro</h6>
+                            <div class="stat-icon stat-icon-success">
+                                <i class="bi bi-percent"></i>
+                            </div>
+                        </div>
+                        <h3 class="fw-bold mb-0">{{ getTasaCobro().toFixed(1) }}%</h3>
                         <small class="text-muted">Pagos realizados</small>
                     </div>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="card h-100">
+                <div class="card h-100 stat-card-info">
                     <div class="card-body">
-                        <h6 class="text-muted">Vecinos Registrados</h6>
-                        <h3>{{ getVecinosRegistrados() }}</h3>
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h6 class="text-muted mb-0">Vecinos Registrados</h6>
+                            <div class="stat-icon stat-icon-info">
+                                <i class="bi bi-people-fill"></i>
+                            </div>
+                        </div>
+                        <h3 class="fw-bold mb-0">{{ getVecinosRegistrados() }}</h3>
                         <small class="text-muted">Usuarios activos</small>
                     </div>
                 </div>

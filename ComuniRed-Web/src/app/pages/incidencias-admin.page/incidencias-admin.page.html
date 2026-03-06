@@ -2,26 +2,41 @@
     <!-- Estadísticas -->
     <div class="row mb-4">
         <div class="col-md-4">
-            <div class="card text-center">
+            <div class="card stat-card-warning">
                 <div class="card-body">
-                    <h6 class="card-title text-muted">Pendientes</h6>
-                    <h2>{{ incidenciasPendientes }}</h2>
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h6 class="card-title text-muted mb-0">Pendientes</h6>
+                        <div class="stat-icon stat-icon-warning">
+                            <i class="bi bi-hourglass-split"></i>
+                        </div>
+                    </div>
+                    <h2 class="fw-bold mb-0">{{ incidenciasPendientes }}</h2>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card text-center">
+            <div class="card stat-card-info">
                 <div class="card-body">
-                    <h6 class="card-title text-muted">En Proceso</h6>
-                    <h2>{{ incidenciasEnProceso }}</h2>
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h6 class="card-title text-muted mb-0">En Proceso</h6>
+                        <div class="stat-icon stat-icon-info">
+                            <i class="bi bi-gear"></i>
+                        </div>
+                    </div>
+                    <h2 class="fw-bold mb-0">{{ incidenciasEnProceso }}</h2>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card text-center">
+            <div class="card stat-card-success">
                 <div class="card-body">
-                    <h6 class="card-title text-muted">Resueltas</h6>
-                    <h2>{{ incidenciasResueltas }}</h2>
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h6 class="card-title text-muted mb-0">Resueltas</h6>
+                        <div class="stat-icon stat-icon-success">
+                            <i class="bi bi-check-circle"></i>
+                        </div>
+                    </div>
+                    <h2 class="fw-bold mb-0">{{ incidenciasResueltas }}</h2>
                 </div>
             </div>
         </div>

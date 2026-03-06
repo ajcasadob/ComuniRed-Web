@@ -2,7 +2,8 @@
     <div class="row g-0 min-vh-100">
         <!-- Left panel -->
         <div
-            class="col-12 col-md-6 d-flex flex-column justify-content-center align-items-start text-white p-5 bg-dark bg-gradient">
+            class="col-12 col-md-6 d-flex flex-column justify-content-center align-items-start text-white p-5"
+            style="background: linear-gradient(145deg, #1e1b4b 0%, #312e81 50%, #1d4ed8 100%)">
             <div class="w-100 d-flex flex-column align-items-center text-center">
                 <div class="rounded-circle bg-white bg-opacity-25 d-flex align-items-center justify-content-center mb-4"
                     style="width:96px; height:96px;">
@@ -52,10 +53,10 @@
         </div>
 
         <!-- Right panel -->
-        <div class="col-12 col-md-6 d-flex align-items-center justify-content-center bg-white p-5">
+        <div class="col-12 col-md-6 d-flex align-items-center justify-content-center p-5" style="background-color: #f8fafc;">
             <div class="w-100" style="max-width:520px;">
-                <h2 class="text-center fw-bold mb-2">Bienvenido</h2>
-                <p class="text-center text-muted mb-4">
+                <h2 class="text-center fw-bold mb-2" style="color:#1e293b;">Bienvenido</h2>
+                <p class="text-center mb-4" style="color:#64748b;">
                     Ingresa tus credenciales para acceder al panel de administración
                 </p>
 
@@ -99,33 +100,19 @@
                         }
                     </div>
 
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="remember" />
-                            <label class="form-check-label" for="remember">Recordar sesión</label>
-                        </div>
-                        <div>
-                            <a href="#" class="text-decoration-none">¿Olvidaste tu contraseña?</a>
-                        </div>
-                    </div>
+                    
 
                     <div class="d-grid mb-3">
                         <button type="submit" class="btn btn-dark btn-lg rounded-pill" [disabled]="logiForm.invalid">Iniciar Sesión</button>
                     </div>
 
-                    <div class="d-flex align-items-center mb-3">
-                        <hr class="flex-grow-1" />
-                        <div class="px-3 text-muted small">¿No tienes cuenta?</div>
-                        <hr class="flex-grow-1" />
-                    </div>
+        
 
                     <div class="d-grid mb-4">
                         <a routerLink="/registro" class="btn btn-outline-secondary rounded-pill">Crear una cuenta nueva</a>
                     </div>
 
-                    <p class="text-center text-muted small mb-0">
-                        © 2024 ComuniRed. Todos los derechos reservados.
-                    </p>
+            
                 </form>
             </div>
         </div>

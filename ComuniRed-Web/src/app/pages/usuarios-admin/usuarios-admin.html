@@ -15,19 +15,29 @@
         <!-- Tarjetas de estadísticas -->
         <div class="row g-3 mb-4">
             <div class="col-md-6">
-                <div class="card h-100">
+                <div class="card h-100 stat-card-danger">
                     <div class="card-body">
-                        <h6 class="text-muted">Administradores</h6>
-                        <h3 class="text-danger">{{ contarAdmin() }}</h3>
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h6 class="text-muted mb-0">Administradores</h6>
+                            <div class="stat-icon stat-icon-danger">
+                                <i class="bi bi-shield-person"></i>
+                            </div>
+                        </div>
+                        <h3 class="fw-bold mb-0">{{ contarAdmin() }}</h3>
                         <small class="text-muted">Rol: admin</small>
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="card h-100">
+                <div class="card h-100 stat-card-primary">
                     <div class="card-body">
-                        <h6 class="text-muted">Usuarios</h6>
-                        <h3 class="text-primary">{{ contarUsuarios() }}</h3>
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h6 class="text-muted mb-0">Usuarios</h6>
+                            <div class="stat-icon stat-icon-primary">
+                                <i class="bi bi-people-fill"></i>
+                            </div>
+                        </div>
+                        <h3 class="fw-bold mb-0">{{ contarUsuarios() }}</h3>
                         <small class="text-muted">Rol: user</small>
                     </div>
                 </div>

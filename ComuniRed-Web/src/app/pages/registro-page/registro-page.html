@@ -2,7 +2,8 @@
     <div class="row g-0 min-vh-100">
         <!-- Panel izquierdo (info) -->
         <div
-            class="col-12 col-md-6 d-flex flex-column justify-content-center align-items-center text-center text-white p-5 bg-dark bg-gradient">
+            class="col-12 col-md-6 d-flex flex-column justify-content-center align-items-center text-center text-white p-5"
+            style="background: linear-gradient(145deg, #1e1b4b 0%, #312e81 50%, #1d4ed8 100%)">
             <div class="mb-4">
                 <div
                     class="rounded-circle bg-white bg-opacity-25 text-white d-inline-flex align-items-center justify-content-center p-4 mb-3">
@@ -52,10 +53,10 @@
         </div>
 
         <!-- Panel derecho (formulario) -->
-        <div class="col-12 col-md-6 d-flex align-items-center justify-content-center bg-white p-5">
+        <div class="col-12 col-md-6 d-flex align-items-center justify-content-center p-5" style="background-color: #f8fafc;">
             <div class="w-100" style="max-width:520px;">
-                <h2 class="text-center fw-bold mb-2">Crear Cuenta</h2>
-                <p class="text-center text-muted mb-4">Completa el formulario para registrarte en el sistema</p>
+                <h2 class="text-center fw-bold mb-2" style="color:#1e293b;">Crear Cuenta</h2>
+                <p class="text-center mb-4" style="color:#64748b;">Completa el formulario para registrarte en el sistema</p>
 
                 <form [formGroup]="registroForm" (ngSubmit)="crearUsuario()">
                     <div class="mb-3">
@@ -132,17 +133,7 @@
                         }
                     </div>
 
-                    <div class="mb-3">
-                        <div class="form-check p-3 border rounded-2">
-                            <input class="form-check-input me-2" type="checkbox" id="terms">
-                            <label class="form-check-label small text-muted" for="terms">
-                                Acepto los
-                                <a href="#" class="text-decoration-none">términos y condiciones</a>
-                                y la
-                                <a href="#" class="text-decoration-none">política de privacidad</a>
-                            </label>
-                        </div>
-                    </div>
+            
 
                     <div class="d-grid mb-3">
                         <button type="submit" class="btn btn-dark btn-lg rounded-pill" [disabled]="registroForm.invalid || registroForm.get('password')?.value !== registroForm.get('confirmarPassword')?.value">Crear Cuenta</button>
@@ -158,8 +149,7 @@
                         <a routerLink="/login" class="btn btn-outline-secondary rounded-pill">Iniciar Sesión</a>
                     </div>
 
-                    <p class="text-center text-muted small mb-0">© 2024 ComuniRed. Todos los derechos reservados.
-                    </p>
+                    
                 </form>
             </div>
         </div>
